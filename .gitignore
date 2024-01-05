@@ -1,0 +1,13 @@
+# Virtual environment
+venv/
+
+# Cache and temporary files
+__pycache__/
+.cache/
+*.pyc
+*.pyo
+*.pyd
+
+# Rasa-specific files
+*.db
+*.json
