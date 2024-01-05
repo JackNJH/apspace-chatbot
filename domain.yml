@@ -1,0 +1,21 @@
+version: "3.1"
+
+intents:
+  - greet
+  - thank
+  - nothing
+  - bye
+
+responses:
+  utter_begin:
+  - text: "Hey! How can I help you?"
+
+  utter_cancel:
+  - text: "Alright! Feel free to ask for assistance again!"
+  
+  utter_bye:
+  - text: "Alright! Feel free to ask for assistance again!"
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true

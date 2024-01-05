@@ -11,3 +11,5 @@ __pycache__/
 # Rasa-specific files
 *.db
 *.json
+.rasa/cache
+models/
