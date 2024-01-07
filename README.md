@@ -21,7 +21,9 @@ Group 12's AI Chatbot for APSpace using Rasa AI. Instructions are provided below
 ## How to Save Changes Made to the Bot:
 You should train the bot after making any changes.
 1. Type `rasa train` in the terminal to train the chatbot.
-2. Continue with `rasa shell` in the terminal to run the chatbot.
+2. Type `rasa run actions` if you have any custom actions.
+3. Continue with `rasa shell` in the terminal to run the chatbot.
+
 
 ### Files and Details:
 
