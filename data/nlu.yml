@@ -1,6 +1,7 @@
 version: "3.1"
 
 nlu:
+# CHAT 
 - intent: greet
   examples: |
     - hey
@@ -21,9 +22,44 @@ nlu:
     - cya
     - goodbye
   
-- intent: nothing
+- intent: cancel
   examples: |
     - nevermind
     - nvm
     - nothing
     - ntg
+  
+- intent: stall
+  examples: |
+    - i see
+    - oh
+    - dang
+    - damn
+    - alright
+    - cool
+
+# FUNCTIONS
+- intent: ask_timetable
+  examples: |
+    - can I see my timetable
+    - whats my timetable
+    - when is the next bus
+    - whens my next class
+    - next class where
+    - when bus
+    - timetable
+
+- intent: inform
+  examples: |
+    - [class](timetable_type)
+    - [bus](timetable_type)
+
+- synonym: class
+  examples: |
+    - school 
+    - schools
+    - classes
+    - course
+    - lesson
+    - subject
+    - subjects

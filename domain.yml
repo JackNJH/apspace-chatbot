@@ -3,10 +3,32 @@ version: "3.1"
 intents:
   - greet
   - thank
-  - nothing
+  - cancel
   - bye
+  - ask_timetable
+  - stall
+  - inform
+
+actions:
+  - action_next_timetable
+  - action_initialize_database
+
+
+entities:
+  - timetable_type
+
+slots:
+  timetable_type:
+    type: text
+    mappings:
+      - type: from_text
+        intent: inform
+        role: timetable_type
+
+
 
 responses:
+  #CHAT
   utter_begin:
   - text: "Hey! How can I help you?"
 
@@ -14,7 +36,17 @@ responses:
   - text: "Alright! Feel free to ask for assistance again!"
   
   utter_bye:
-  - text: "Alright! Feel free to ask for assistance again!"
+  - text: "Alright! Have a good day!"
+
+  utter_thanks:
+  - text: "You're welcome, it's my pleasure to be of assistance."
+
+  utter_stall:
+  - text: "Is there anything else you need help with?"
+
+  #FUNCTIons:
+  utter_ask_timetable_type:
+  - text: "It seems you are asking for a timetable. Which timetable do you wish to know?" 
 
 session_config:
   session_expiration_time: 60
