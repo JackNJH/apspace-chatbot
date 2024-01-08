@@ -27,11 +27,19 @@ def insert_sample_data():
         
         # Inserting sample data
         cursor.execute("INSERT INTO timetable (class_name, class_time, class_location) VALUES (?, ?, ?)",
-                       ('Math', 'Monday 10:00 AM', 'Room 101'))
+                       ('IAI Tutorial', 'Monday 8:30 AM', 'D-07-08'))
         cursor.execute("INSERT INTO timetable (class_name, class_time, class_location) VALUES (?, ?, ?)",
-                       ('English', 'Tuesday 2:00 PM', 'Room 202'))
+                       ('Java Programming Lab', 'Monday 10:45 AM', 'Tech Lab 6-07'))
         cursor.execute("INSERT INTO timetable (class_name, class_time, class_location) VALUES (?, ?, ?)",
-                       ('History', 'Wednesday 1:30 PM', 'Room 103'))
+                       ('Digital Security Tutorial', 'Monday 3:45 PM', 'B-04-03'))
+        cursor.execute("INSERT INTO timetable (class_name, class_time, class_location) VALUES (?, ?, ?)",
+                       ('Java Programming Lect', 'Tuesday 8:30 PM', 'E-08-03'))
+        cursor.execute("INSERT INTO timetable (class_name, class_time, class_location) VALUES (?, ?, ?)",
+                       ('Software Development Project', 'Wednesday 1:30 PM', 'B-07-09'))
+        cursor.execute("INSERT INTO timetable (class_name, class_time, class_location) VALUES (?, ?, ?)",
+                       ('IAI Lect', 'Thursday 3:45 PM', 'B-04-03'))
+        cursor.execute("INSERT INTO timetable (class_name, class_time, class_location) VALUES (?, ?, ?)",
+                       ('Digital Security Lect', 'Friday 8:30 PM', 'B-04-05'))
         
         # Inserting sample bus data
         cursor.execute("INSERT INTO bus_timetable (bus_time, bus_location) VALUES (?, ?)",
@@ -40,6 +48,8 @@ def insert_sample_data():
                        ('Tuesday 3:30 PM', 'APU to LRT'))
         cursor.execute("INSERT INTO bus_timetable (bus_time, bus_location) VALUES (?, ?)",
                        ('Wednesday 12:00 PM', 'LRT to APU'))
+        cursor.execute("INSERT INTO bus_timetable (bus_time, bus_location) VALUES (?, ?)",
+                       ('Thursday 12:00 PM', 'LRT to APU'))                  
 
 def get_next_class():
     with sqlite3.connect('timetable.db') as connection:

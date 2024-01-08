@@ -21,16 +21,19 @@ stories:
   steps:
   - intent: ask_timetable
   - action: utter_ask_timetable_type
-  - intent: inform
+  - intent: inform_timetable_type
     entities:
     - timetable_type: class
   - action: action_next_timetable
+  - 
 
 - story: ask for bus timetable
   steps:
   - intent: ask_timetable
   - action: utter_ask_timetable_type
-  - intent: inform
+  - intent: inform_timetable_type
     entities:
     - timetable_type: bus
-  - action: action_next_timetable
+  - action: utter_ask_bus_type
+  - intent: inform_bus_type
+  

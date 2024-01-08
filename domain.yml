@@ -7,7 +7,7 @@ intents:
   - bye
   - ask_timetable
   - stall
-  - inform
+  - inform_timetable_type
 
 actions:
   - action_next_timetable
@@ -47,6 +47,12 @@ responses:
   #FUNCTIons:
   utter_ask_timetable_type:
   - text: "It seems you are asking for a timetable. Which timetable do you wish to know?" 
+
+  utter_ask_whole_timetable:
+  - text: "Would you like to see the timetable for the whole day instead?"
+
+  utter_ask_bus_type:
+  - text: "Which bus would you like to take? From where to where?"
 
 session_config:
   session_expiration_time: 60

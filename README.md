@@ -29,8 +29,10 @@ You should train the bot after making any changes.
 
 | File         | Details                                      |
 | ------------ | -------------------------------------------- |
-| `nlu.yml`     | Give example user messages to train the NLU model. |
-| `domain.yml`  | The brain of the chatbot. All intents, responses, etc. should be registered in this file. |
+| `nlu.yml`     | Give example user messages to train the NLU model. Intents and synonyms should be defined here.  |
+| `domain.yml`  | The brain of the chatbot. All intents, actions, slots, entities, etc. should be registered in this file. |
 | `stories.yml`  | Like a decision-based story game, the different paths that a conversation can take are captured here. |
 | `rules.yml`  | Explicit rules or conditions to handle specific user inputs are defined here.  |
 | models  | Each time you train the bot it creates a new 'model' in the models folder. |
+| `acions.py`  | Custom actions for the bot to execute. Any complex responses that require fetching from database is defined here. |
+| `database.py`  | Database file. Create and store all your mock data here. |

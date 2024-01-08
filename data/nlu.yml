@@ -1,6 +1,17 @@
 version: "3.1"
 
 nlu:
+#SYNONYMS
+- synonym: class
+  examples: |
+    - school 
+    - schools
+    - classes
+    - course
+    - lesson
+    - subject
+    - subjects
+
 # CHAT 
 - intent: greet
   examples: |
@@ -28,6 +39,10 @@ nlu:
     - nvm
     - nothing
     - ntg
+    - nah
+    - no
+    - its aight
+    - its alright
   
 - intent: stall
   examples: |
@@ -49,17 +64,11 @@ nlu:
     - when bus
     - timetable
 
-- intent: inform
+- intent: inform_timetable_type
   examples: |
     - [class](timetable_type)
     - [bus](timetable_type)
 
-- synonym: class
+- intent: inform_bus_type
   examples: |
-    - school 
-    - schools
-    - classes
-    - course
-    - lesson
-    - subject
-    - subjects
+    - 
