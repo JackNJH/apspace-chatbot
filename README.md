@@ -25,14 +25,24 @@ You should train the bot after making any changes.
 3. Continue with `rasa shell` in the terminal to run the chatbot.
 
 
-### Files and Details:
+### Files and Description:
 
-| File         | Details                                      |
+| File         | Description                                      |
 | ------------ | -------------------------------------------- |
 | `nlu.yml`     | Give example user messages to train the NLU model. Intents and synonyms should be defined here.  |
 | `domain.yml`  | The brain of the chatbot. All intents, actions, slots, entities, etc. should be registered in this file. |
 | `stories.yml`  | Like a decision-based story game, the different paths that a conversation can take are captured here. |
 | `rules.yml`  | Explicit rules or conditions to handle specific user inputs are defined here.  |
-| models  | Each time you train the bot it creates a new 'model' in the models folder. |
-| `acions.py`  | Custom actions for the bot to execute. Any complex responses that require fetching from database is defined here. |
+| models  | Each time you train the bot, it creates a new 'model' in the models folder. |
+| `actions.py`  | Custom actions for the bot to execute. Any complex responses that require fetching from the database are defined here. |
 | `database.py`  | Database file. Create and store all your mock data here. |
+
+### Terms and Description:
+
+| Term        | Description                                 |
+| ----------- | ------------------------------------------- |
+| NLU         | Natural Language Understanding. It involves training the model to comprehend and extract intent and entities from user messages. The training data for NLU are example user inputs. |
+| Slots       | Slots are used to store and retrieve information from the user's input. They represent pieces of data that the chatbot needs to keep track of during a conversation. Basically if you want the chatbot to remember a piece of information for later you'll need a slot for it. |
+| Entities    | Entities are specific pieces of information that the chatbot extracts from user messages. This is what the 'key terms' the bot searches for in an intent. |
+
+
