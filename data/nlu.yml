@@ -2,15 +2,33 @@ version: "3.1"
 
 nlu:
 #SYNONYMS
+- synonym: next
+  examples: |
+    - later
+    - after this
+    - later on
+    - after
+    - now
+
+- synonym: whole
+  examples: |
+    - all
+    - complete
+    - week
+    - week's
+  
+- synonym: today
+  examples: |
+    - today's
+
 - synonym: class
   examples: |
-    - school 
-    - schools
     - classes
+    - class's 
+    - lessons
     - course
     - lesson
-    - subject
-    - subjects
+    - courses
 
 # CHAT 
 - intent: greet
@@ -54,21 +72,39 @@ nlu:
     - cool
 
 # FUNCTIONS
+#TIMETABLE
 - intent: ask_timetable
   examples: |
-    - can I see my timetable
-    - whats my timetable
-    - when is the next bus
-    - whens my next class
-    - next class where
-    - when bus
     - timetable
+    - schedule
+    - what's on my schedule
+    - check my timetable
 
 - intent: inform_timetable_type
   examples: |
-    - [class](timetable_type)
-    - [bus](timetable_type)
+    - [class](timetable_type) please
+    - i wanna know my [class](timetable_type)
+    - what [class](timetable_type) do i have
+    - i wanna know about the [bus](timetable_type)
+    - when is the last [bus](timetable_type)
+    - when is the next [bus](timetable_type)
+    - is the [bus](timetable_type) coming yet
+    - where is my next [class](timetable_type)
 
-- intent: inform_bus_type
+- intent: inform_class_timetable_type
   examples: |
-    - 
+    - can I see my [next](class_timetable_type) class
+    - what's my [next](class_timetable_type) class
+    - when is the [next](class_timetable_type) class
+    - what are my upcoming [next](class_timetable_type) classes
+    - any [next](class_timetable_type) class
+    - can I see the [whole](class_timetable_type) timetable
+    - show me the entire [whole](class_timetable_type) timetable
+    - I want to know all [whole](class_timetable_type) classes today
+    - show [whole](class_timetable_type) classes
+    - what's on the [whole](class_timetable_type) schedule
+    - what classes are there [whole](class_timetable_type)
+    - what is on my schedule [today](class_timetable_type)
+    - what lessons are there [today](class_timetable_type)
+    - any classes scheduled [today](class_timetable_type)
+

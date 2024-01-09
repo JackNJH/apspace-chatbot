@@ -2,12 +2,18 @@ version: "3.1"
 
 stories:
 #CHAT
-- story: chat-start example
+- story: greet
   steps:
   - intent: greet
   - action: utter_begin
+
+- story: cancel
+  steps:
   - intent: cancel
   - action: utter_cancel
+
+- story: bye
+  steps:
   - intent: bye
   - action: utter_bye
 
@@ -16,24 +22,69 @@ stories:
   - intent: thank
   - action: utter_thanks
 
-#FUNCTIONS
-- story: ask for class timetable
+- story: stall
   steps:
-  - intent: ask_timetable
-  - action: utter_ask_timetable_type
-  - intent: inform_timetable_type
-    entities:
-    - timetable_type: class
-  - action: action_next_timetable
-  - 
+  - intent: stall
+  - action: utter_stall 
 
-- story: ask for bus timetable
+
+
+#FUNCTIONS
+#TIMETABLE
+- story: ask for timetable
   steps:
-  - intent: ask_timetable
-  - action: utter_ask_timetable_type
-  - intent: inform_timetable_type
-    entities:
-    - timetable_type: bus
-  - action: utter_ask_bus_type
-  - intent: inform_bus_type
+    - intent: ask_timetable
+    - action: utter_ask_timetable_type
   
+#BUS
+- story: provide bus timetable type
+  steps:
+    - intent: inform_timetable_type
+      entities:
+        - timetable_type: bus
+    - action: utter_ask_bus_type
+
+
+
+#CLASS
+- story: provide class timetable type
+  steps:
+    - intent: inform_timetable_type
+      entities:
+        - timetable_type: class
+    - action: utter_ask_class_timetable_type
+
+- story: provide next class timetable type
+  steps:
+    - intent: inform_timetable_type
+      entities:
+        - timetable_type: class
+    - action: utter_ask_class_timetable_type
+    - intent: inform_class_timetable_type
+      entities:
+        - class_timetable_type: next
+    - action: action_show_class_timetable
+
+- story: provide today class timetable type
+  steps:
+    - intent: inform_timetable_type
+      entities:
+        - timetable_type: class
+    - action: utter_ask_class_timetable_type
+    - intent: inform_class_timetable_type
+      entities:
+        - class_timetable_type: today
+    - action: action_show_class_timetable
+
+- story: provide week class timetable type
+  steps:
+    - intent: inform_timetable_type
+      entities:
+        - timetable_type: class
+    - action: utter_ask_class_timetable_type
+    - intent: inform_class_timetable_type
+      entities:
+        - class_timetable_type: week
+    - action: action_show_class_timetable
+
+

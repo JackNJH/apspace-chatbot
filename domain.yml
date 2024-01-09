@@ -1,30 +1,38 @@
 version: "3.1"
 
 intents:
+  #CHAT
   - greet
   - thank
   - cancel
   - bye
-  - ask_timetable
   - stall
+
+  #TIMETABLE
+  - ask_timetable
   - inform_timetable_type
+  - inform_class_timetable_type
+
 
 actions:
-  - action_next_timetable
-  - action_initialize_database
+  - action_show_class_timetable
 
 
 entities:
+  - class_timetable_type
   - timetable_type
 
 slots:
-  timetable_type:
-    type: text
+  class_timetable_type:
+    type: categorical
+    values:
+      - next
+      - week
+      - today
     mappings:
-      - type: from_text
-        intent: inform
-        role: timetable_type
-
+      - intent: inform_class_timetable_type
+        type: from_entity
+        entity: class_timetable_type
 
 
 responses:
@@ -33,7 +41,7 @@ responses:
   - text: "Hey! How can I help you?"
 
   utter_cancel:
-  - text: "Alright! Feel free to ask for assistance again!"
+  - text: "Alright! Feel free to ask for assistance!"
   
   utter_bye:
   - text: "Alright! Have a good day!"
@@ -44,15 +52,19 @@ responses:
   utter_stall:
   - text: "Is there anything else you need help with?"
 
-  #FUNCTIons:
+  #FUNCTIONS:
+  #TIMETABLE
   utter_ask_timetable_type:
   - text: "It seems you are asking for a timetable. Which timetable do you wish to know?" 
 
-  utter_ask_whole_timetable:
-  - text: "Would you like to see the timetable for the whole day instead?"
+  utter_ask_class_timetable_type:
+  - text: "Would you like to know your next class, today's class or your whole timetable?"
 
   utter_ask_bus_type:
-  - text: "Which bus would you like to take? From where to where?"
+  - text: "Which bus would you like to ride? (From where to where)"
+
+  #CONFIG
+
 
 session_config:
   session_expiration_time: 60
