@@ -1,46 +1,171 @@
 import sqlite3
 
+#ADD MORE DATA OR REMOVE DATA AS YOU WISH
+#YOU CAN REMOVE DATA TO CREATE FALLBACKS RESPONSES FOR THE BOT LIKE (IF ASKED FOR SEM5 RESULTS BUT THERE IS NOTHING THEN WHAT RESPONSE ETC)
+
 def insert_sample_data():
     try:
         with sqlite3.connect('timetable.db') as connection:
             cursor = connection.cursor()
             
-            # Inserting sample data
-            cursor.execute("INSERT INTO timetable (class_name, day_of_week, class_time, class_location) VALUES (?, ?, ?, ?)",
-                        ('IAI Tutorial', 'Monday', '08:30 AM', 'D-07-08'))
-            cursor.execute("INSERT INTO timetable (class_name, day_of_week, class_time, class_location) VALUES (?, ?, ?, ?)",
-                        ('Java Programming Lab', 'Monday', '10:45 AM', 'Tech Lab 6-07'))
-            cursor.execute("INSERT INTO timetable (class_name, day_of_week, class_time, class_location) VALUES (?, ?, ?, ?)",
-                        ('Digital Security Tutorial', 'Monday', '03:45 PM', 'B-04-03'))
-            cursor.execute("INSERT INTO timetable (class_name, day_of_week, class_time, class_location) VALUES (?, ?, ?, ?)",
-                        ('Java Programming Lect', 'Tuesday', '08:30 AM', 'E-08-03'))
-            cursor.execute("INSERT INTO timetable (class_name, day_of_week, class_time, class_location) VALUES (?, ?, ?, ?)",
-                        ('Software Development Project', 'Wednesday', '01:30 PM', 'B-07-09'))
-            cursor.execute("INSERT INTO timetable (class_name, day_of_week, class_time, class_location) VALUES (?, ?, ?, ?)",
-                        ('IAI Lect', 'Thursday', '08:30 AM', 'B-05-05'))
-            cursor.execute("INSERT INTO timetable (class_name, day_of_week, class_time, class_location) VALUES (?, ?, ?, ?)",
-                        ('Digital Security Lect', 'Friday', '08:30 AM', 'B-04-05'))
+            #CLASSROOMS & SCHEDULES
+            cursor.executemany('''
+                INSERT INTO classrooms (classroom_id, class_block, class_floor)
+                VALUES (?, ?, ?)
+                ''', [
+                    ('B-04-05', 'B', '4th Floor'),
+                    ('B-04-03', 'B', '4th Floor'),
+                    ('B-05-05', 'B', '5th Floor'),
+                    ('B-07-09', 'B', '7th Floor'),
+                    ('D-07-08', 'D', '7th Floor'),
+                    ('D-07-10', 'D', '7th Floor'),
+                    ('E-08-03', 'E', '8th Floor'),
+                    ('Tech Lab 6-07', 'Tech Lab', '6th Floor'),
+                    ('Tech Lab 5-03', 'Tech Lab', '5th Floor'),
+                ])
 
+            cursor.executemany('''
+                INSERT INTO class_schedule (classroom_id, day_of_week, start_time, end_time, subject_name, class_type)
+                VALUES (?, ?, ?, ?, ?, ?)
+            ''', [
+                ('D-07-08', 'Monday', '08:30 AM', '10:30 AM', 'Introduction to AI', 'Tutorial'),
+                ('Tech Lab 6-07', 'Monday', '10:45 AM', '12:45 PM', 'Java Programming', 'Lab'),
+                ('B-04-03', 'Monday', '08:30 AM', '10:30 AM', 'Digital Security & Forensics', 'Tutorial'),
+                ('E-08-03', 'Tuesday', '08:30 AM', '10:30 AM', 'Java Programming', 'Lecture'),
+                ('B-07-09', 'Wednesday', '01:30 PM', '03:30 PM', 'Software Development Project', None),
+                ('B-05-05', 'Thursday', '08:30 AM', '10:30 AM', 'Introduction to AI ', 'Lecture'),
+                ('B-04-05', 'Friday', '08:30 AM', '10:30 AM', 'Digital Security & Forensics', 'Lecture'),
+            ])
 
-            
-            # Inserting sample bus data
-            # APU --> LRT
-            days_apu_to_lrt = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
-            times_apu_to_lrt = ['9:00 AM', '3:30 PM']
+            cursor.executemany('''
+                INSERT INTO bus_schedule (route, start_time)
+                VALUES (?, ?)
+            ''', [
+                ('APU to LRT', '01:00 PM'),
+                ('APU to LRT', '01:30 PM'),
+                ('APU to LRT', '02:00 PM'),
+                ('APU to LRT', '02:30 PM'),
+                ('APU to LRT', '03:00 PM'),
+                ('APU to LRT', '03:30 PM'),
+                ('APU to LRT', '04:00 PM'),
+                ('LRT to APU', '08:00 AM'),
+                ('LRT to APU', '08:30 AM'),
+                ('LRT to APU', '09:00 AM'),
+                ('LRT to APU', '09:30 AM'),
+                ('LRT to APU', '10:00 AM'),
+                ('LRT to APU', '10:30 AM'),
+                ('LRT to APU', '11:00 AM'),
+                ('LRT to APU', '11:30 AM'),
+                ('LRT to APU', '12:00 PM'),
+                ('LRT to APU', '12:30 PM'),
+                ('LRT to APU', '01:00 PM'),
+                ('LRT to APU', '01:30 PM'),
+                ('LRT to APU', '02:00 PM'),
+                ('FORTUNE PARK to APU', '10:00 AM'),
+                ('FORTUNE PARK to APU', '02:00 PM'),
+                ('APU to FORTUNE PARK', '12:00 PM'),
+                ('APU to FORTUNE PARK', '04:00 PM'),
+            ])
 
-            for day in days_apu_to_lrt:
-                for time in times_apu_to_lrt:
-                    cursor.execute("INSERT INTO bus_timetable (bus_time, bus_location) VALUES (?, ?)",
-                                (f'{day} {time}', 'APU to LRT'))
+            # SUBJECTS
+            subjects_data = [
+                ('Introduction to AI',),
+                ('Digital Security & Forensics',),
+                ('Java Programming',),
+                ('Software Development Project',),
+                ('Numerical Methods',),
+                ('Web Development',),
+                ('Programming with Python',),
+                ('Database Systems',),
+                ('Information Systems',),
+                ('Fundamentals of Entrepreneurship',),
+            ]
 
-            # LRT --> APU
-            days_lrt_to_apu = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
-            times_lrt_to_apu = ['8:00 AM', '2:30 PM']
+            cursor.executemany('''
+                INSERT INTO subjects (subject_name)
+                VALUES (?)
+            ''', subjects_data)
 
-            for day in days_lrt_to_apu:
-                for time in times_lrt_to_apu:
-                    cursor.execute("INSERT INTO bus_timetable (bus_time, bus_location) VALUES (?, ?)",
-                                (f'{day} {time}', 'LRT to APU'))  
-    
+            #RESULTS
+            cursor.executemany('''
+                INSERT INTO results (subject_id, semester, gpa)
+                VALUES (?, ?, ?)
+            ''', [
+                (1, 5, 3.3),
+                (2, 5, 3.7),
+                (3, 5, 2.3),
+                (4, 5, 2.0),
+                (5, 4, 3.0),
+                (6, 4, 2.7),
+                (7, 3, 3.0),
+                (8, 3, 2.3),
+                (9, 1, 4.0),
+                (10, 1, 4.0),
+            ])
+
+            #APCARD (LATEST ACTIVITY)
+            #theres not really a need for multiple inputs for this one because the chatbot is only catered to 1 person right now anyway....
+            cursor.executemany('''
+                INSERT INTO apcard (remaining_cash, spending_history, topup_history)
+                VALUES (?, ?, ?)
+            ''', [
+                (100.0, 'Bought books', 'Added $50'),
+            ])
+
+            #FEES
+            #theres not really a need for multiple inputs for this one because the chatbot is only catered to 1 person right now anyway....
+            cursor.executemany('''
+                INSERT INTO pending_fees (total_amount, unpaid, paid)
+                VALUES (?, ?, ?)
+            ''', [
+                (33000.0, 24000.0, 9000.0),
+            ])
+
+            #ATTENDANCE
+            #take note that the semesters are the same as the ones in the results table for consistency
+            cursor.executemany('''
+                INSERT INTO attendance (subject_id, semester, percentage)
+                VALUES (?, ?, ?)
+            ''', [
+                (1, 5, 95.0),
+                (2, 5, 100.0),
+                (3, 5, 87.3),
+                (4, 5, 90.0),
+                (5, 4, 93.0),
+                (6, 4, 95.2),
+                (7, 3, 88.0),
+                (8, 3, 100.0),
+                (9, 1, 100.0),
+                (10, 1, 98.0),
+            ])
+
+            # LIBRARY STUFF
+            meeting_rooms_data = [
+                ('Room 1',),
+                ('Room 2',),
+                ('Room 3',),
+            ]
+
+            cursor.executemany('''
+                INSERT INTO meeting_rooms (room_name)
+                VALUES (?)
+            ''', meeting_rooms_data)
+
+            cursor.executemany('''
+                INSERT INTO booked_rooms (room_id, start_time, end_time, booking_day)
+                VALUES (?, ?, ?, ?)
+            ''', [
+                (1, '10:00 AM', '11:00 AM', 'Monday'),
+                (2, '03:30 PM', '05:00 PM', 'Wednesday'),
+            ])
+
+            cursor.executemany('''
+                INSERT INTO borrowed_books (book_name, deadline)
+                VALUES (?, ?)
+            ''', [
+                ('Coding for Nerds', '2024-02-15'),
+                ('How to Cook..?', '2024-03-10'),
+            ])      
+
     except sqlite3.Error as e:
         print(f"Error inserting sample data: {e}")
