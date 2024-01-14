@@ -105,14 +105,7 @@ def initialize_database():
                 )
             ''')
 
-            cursor.execute('''
-                CREATE TABLE IF NOT EXISTS borrowed_books (
-                    book_id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    book_name TEXT NOT NULL,
-                    deadline TEXT
-                )
-            ''')
 
     except sqlite3.Error as e:
-        print(f"Error initializing the database: {e}")          
+        print(f"Error initializing the database: {e}")    
 

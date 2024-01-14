@@ -159,13 +159,5 @@ def insert_sample_data():
                 (2, '03:30 PM', '05:00 PM', 'Wednesday'),
             ])
 
-            cursor.executemany('''
-                INSERT INTO borrowed_books (book_name, deadline)
-                VALUES (?, ?)
-            ''', [
-                ('Coding for Nerds', '2024-02-15'),
-                ('How to Cook..?', '2024-03-10'),
-            ])      
-
     except sqlite3.Error as e:
         print(f"Error inserting sample data: {e}")

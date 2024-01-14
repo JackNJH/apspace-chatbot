@@ -80,7 +80,6 @@ def get_today_classes():
         return None
 
 
-
 #Call function to clear table's data
 def clear_all_data():
     with sqlite3.connect('timetable.db') as connection:
@@ -89,3 +88,10 @@ def clear_all_data():
         cursor.execute('DROP TABLE IF EXISTS class_schedule')
         cursor.execute('DROP TABLE IF EXISTS bus_schedule')
         cursor.execute('DROP TABLE IF EXISTS subjects')
+        cursor.execute('DROP TABLE IF EXISTS results')
+        cursor.execute('DROP TABLE IF EXISTS apcard')
+        cursor.execute('DROP TABLE IF EXISTS pending_fees')
+        cursor.execute('DROP TABLE IF EXISTS attendance')
+        cursor.execute('DROP TABLE IF EXISTS meeting_rooms')
+        cursor.execute('DROP TABLE IF EXISTS booked_rooms')
+        cursor.execute('DROP TABLE IF EXISTS borrowed_books')
