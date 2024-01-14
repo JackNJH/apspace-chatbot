@@ -52,6 +52,12 @@ responses:
   utter_stall:
   - text: "Is there anything else you need help with?"
 
+  utter_ask_rephrase:
+  - text: "I'm sorry, I didn't quite understand that. Could you rephrase?"
+
+  utter_default:
+  - text: "Sorry... I can't help you."
+
   #FUNCTIONS:
   #TIMETABLE
   utter_ask_timetable_type:
@@ -61,11 +67,9 @@ responses:
   - text: "Would you like to know your next class, today's class or your whole timetable?"
 
   utter_ask_bus_type:
-  - text: "Which bus would you like to ride? (From where to where)"
+  - text: "Which bus schedule would you like to know? (From where to where)"
 
   #CONFIG
-
-
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true

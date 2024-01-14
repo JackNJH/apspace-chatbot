@@ -1,3 +1,2 @@
 rasa
-python>=3.6,<3.11
 sqlalchemy<2.0
