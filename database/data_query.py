@@ -1,5 +1,5 @@
 import sqlite3
-from datetime import datetime
+from datetime import datetime, timedelta
 
 def get_next_class():
     try:
@@ -8,16 +8,37 @@ def get_next_class():
 
         with sqlite3.connect('timetable.db') as connection:
             cursor = connection.cursor()
+
+            # Get the next class for the current day
             cursor.execute('''
-                SELECT subject_name, day_of_week, start_time, end_time, c.classroom_id
+                SELECT subject_name, class_type, day_of_week, start_time, end_time, c.classroom_id
                 FROM class_schedule cs
                 INNER JOIN classrooms c ON cs.classroom_id = c.classroom_id
-                WHERE (day_of_week = ? AND start_time > ?) OR (day_of_week > ?)
-                ORDER BY start_time, day_of_week
+                WHERE day_of_week = ? AND start_time >= ?
+                ORDER BY start_time
                 LIMIT 1
-            ''', (current_day_of_week, current_time, current_day_of_week))
+            ''', (current_day_of_week, current_time))
 
             next_class = cursor.fetchone()
+
+            # If no more classes for the current day, find the earliest class for the next available day
+            if not next_class:
+                next_day = (datetime.now() + timedelta(days=1)).strftime('%A')
+
+                # Loop until a day with classes is found
+                while not next_class:
+                    cursor.execute('''
+                        SELECT subject_name, class_type, day_of_week, start_time, end_time, c.classroom_id
+                        FROM class_schedule cs
+                        INNER JOIN classrooms c ON cs.classroom_id = c.classroom_id
+                        WHERE day_of_week = ?
+                        ORDER BY start_time
+                        LIMIT 1
+                    ''', (next_day,))
+                    next_class = cursor.fetchone()
+
+                    # Move to the next day
+                    next_day = (datetime.strptime(next_day, '%A') + timedelta(days=1)).strftime('%A')
 
         return next_class
     except sqlite3.Error as e:
@@ -29,9 +50,7 @@ def get_all_classes():
         with sqlite3.connect('timetable.db') as connection:
             cursor = connection.cursor()
             cursor.execute('''
-                SELECT cs.subject_name, cs.day_of_week, 
-                       cs.start_time, cs.end_time,
-                       cs.classroom_id
+                SELECT cs.subject_name, cs.class_type, cs.day_of_week, cs.start_time, cs.classroom_id
                 FROM class_schedule cs
                 INNER JOIN classrooms c ON cs.classroom_id = c.classroom_id
             ''')
@@ -48,7 +67,7 @@ def get_today_classes():
         with sqlite3.connect('timetable.db') as connection:
             cursor = connection.cursor()
             cursor.execute('''
-                SELECT cs.subject_name, cs.day_of_week, cs.start_time, cs.end_time, cs.classroom_id
+                SELECT cs.subject_name, cs.class_type, cs.day_of_week, cs.start_time, cs.classroom_id
                 FROM class_schedule cs
                 INNER JOIN classrooms c ON cs.classroom_id = c.classroom_id
                 WHERE cs.day_of_week = ?
@@ -62,7 +81,7 @@ def get_today_classes():
 
 
 
-#Call function at bottom of the script and run it to clear table's data
+#Call function to clear table's data
 def clear_all_data():
     with sqlite3.connect('timetable.db') as connection:
         cursor = connection.cursor()

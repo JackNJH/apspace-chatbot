@@ -83,6 +83,7 @@ nlu:
 - intent: inform_timetable_type
   examples: |
     - [class](timetable_type) please
+    - [bus](timetable_type) please
     - i wanna know my [class](timetable_type)
     - what [class](timetable_type) do i have
     - i wanna know about the [bus](timetable_type)
@@ -93,6 +94,9 @@ nlu:
 
 - intent: inform_class_timetable_type
   examples: |
+    - [next](class_timetable_type)
+    - [today](class_timetable_type)
+    - [whole](class_timetable_type)
     - can I see my [next](class_timetable_type) class
     - what's my [next](class_timetable_type) class
     - when is the [next](class_timetable_type) class

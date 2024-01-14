@@ -4,8 +4,6 @@ from typing import Any, Text, Dict, List
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 
-    
-
 class ActionShowTimetable(Action):
     def name(self):
         return 'action_show_class_timetable'
@@ -19,7 +17,7 @@ class ActionShowTimetable(Action):
             next_class = get_next_class()
 
             if next_class:
-                response = f"The next class is {next_class['subject_name']} starts from {next_class['start_time']} to {next_class['end_time']} in {next_class['classroom_id']}."
+               response = f"Your next class is {next_class[0]} {next_class[1]}.\nIt's on {next_class[2]} at {next_class[3]} to {next_class[4]} in {next_class[5]}."
             else:
                 response = "There are no upcoming classes in the timetable."
 
@@ -30,7 +28,7 @@ class ActionShowTimetable(Action):
             if all_classes:
                 response = "Here is the complete timetable:\n"
                 for class_info in all_classes:
-                    response += f"{class_info['subject_name']} on {class_info['day_of_week']} at {class_info['start_time']}\n"
+                    response += f"{class_info[0]} {class_info[1]} on {class_info[2]} at {class_info[3]} in {class_info[4]}\n"
             else:
                 response = "The timetable is currently empty."
 
@@ -41,7 +39,7 @@ class ActionShowTimetable(Action):
             if today_classes:
                 response = "Here are today's classes:\n"
                 for class_info in today_classes:
-                    response += f"{class_info['subject_name']} at {class_info['start_time']} in {class_info['classroom_id']}\n"
+                    response += f"{class_info[0]} {class_info[1]} on {class_info[2]} at {class_info[3]} to {class_info[4]} in {class_info[5]}\n"
             else:
                 response = "There are no classes scheduled for today."
 

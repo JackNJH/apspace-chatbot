@@ -28,7 +28,6 @@ stories:
   - action: utter_stall 
 
 
-
 #FUNCTIONS
 #TIMETABLE
 - story: ask for timetable
@@ -36,55 +35,7 @@ stories:
     - intent: ask_timetable
     - action: utter_ask_timetable_type
   
-#BUS
-- story: provide bus timetable type
-  steps:
-    - intent: inform_timetable_type
-      entities:
-        - timetable_type: bus
-    - action: utter_ask_bus_type
-
-
-
-#CLASS
-- story: provide class timetable type
-  steps:
-    - intent: inform_timetable_type
-      entities:
-        - timetable_type: class
-    - action: utter_ask_class_timetable_type
-
-- story: provide next class timetable type
-  steps:
-    - intent: inform_timetable_type
-      entities:
-        - timetable_type: class
-    - action: utter_ask_class_timetable_type
-    - intent: inform_class_timetable_type
-      entities:
-        - class_timetable_type: next
-    - action: action_show_class_timetable
-
-- story: provide today class timetable type
-  steps:
-    - intent: inform_timetable_type
-      entities:
-        - timetable_type: class
-    - action: utter_ask_class_timetable_type
-    - intent: inform_class_timetable_type
-      entities:
-        - class_timetable_type: today
-    - action: action_show_class_timetable
-
-- story: provide week class timetable type
-  steps:
-    - intent: inform_timetable_type
-      entities:
-        - timetable_type: class
-    - action: utter_ask_class_timetable_type
-    - intent: inform_class_timetable_type
-      entities:
-        - class_timetable_type: week
-    - action: action_show_class_timetable
+# BUS
+# CLASS
 
 
