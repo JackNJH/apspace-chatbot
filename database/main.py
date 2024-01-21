@@ -11,6 +11,7 @@ def main():
     all_classes = get_all_classes()
     all_classes_today = get_today_classes()
 
+    
     print("Next Class:", next_class)
     print("All Classes:", all_classes)
     print("All Classes Today:", all_classes_today)

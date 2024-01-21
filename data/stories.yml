@@ -30,12 +30,42 @@ stories:
 
 #FUNCTIONS
 #TIMETABLE
-- story: ask for timetable
+# BUS
+
+
+# CLASS
+- story: user asks for class timetable
   steps:
     - intent: ask_timetable
     - action: utter_ask_timetable_type
-  
-# BUS
-# CLASS
+    - intent: inform_timetable_type
+      entities:
+        - timetable_type: class
+    - checkpoint: class_timetable_checkpoint
 
+- story: user wants to see the next class
+  steps:
+    - checkpoint: class_timetable_checkpoint
+    - action: utter_ask_class_timetable_type
+    - intent: inform_class_timetable_type
+      entities:
+        - class_timetable_type: next
+    - action: action_show_class_timetable
 
+- story: user wants to see today's class
+  steps:
+    - checkpoint: class_timetable_checkpoint
+    - action: utter_ask_class_timetable_type
+    - intent: inform_class_timetable_type
+      entities:
+        - class_timetable_type: today
+    - action: action_show_class_timetable
+
+- story: user wants to see this week class
+  steps:
+    - checkpoint: class_timetable_checkpoint
+    - action: utter_ask_class_timetable_type
+    - intent: inform_class_timetable_type
+      entities:
+        - class_timetable_type: week
+    - action: action_show_class_timetable

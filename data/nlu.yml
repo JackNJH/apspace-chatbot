@@ -79,6 +79,7 @@ nlu:
     - schedule
     - what's on my schedule
     - check my timetable
+    - can i see my timetable?
 
 - intent: inform_timetable_type
   examples: |
@@ -111,4 +112,5 @@ nlu:
     - what is on my schedule [today](class_timetable_type)
     - what lessons are there [today](class_timetable_type)
     - any classes scheduled [today](class_timetable_type)
+
 

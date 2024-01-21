@@ -39,15 +39,21 @@ responses:
   #CHAT
   utter_begin:
   - text: "Hey! How can I help you?"
+  - text: "Hi! Do you need any help?"
+  - text: "Good day, what can I help with?"
 
   utter_cancel:
   - text: "Alright! Feel free to ask for assistance!"
+  - text: "Ask again if you need anything!"
   
   utter_bye:
-  - text: "Alright! Have a good day!"
+  - text: "Bye! Have a good day!"
+  - text: "See you!"
+  - text: "Have a good day ahead!"
 
   utter_thanks:
   - text: "You're welcome, it's my pleasure to be of assistance."
+  - text: "No problem."
 
   utter_stall:
   - text: "Is there anything else you need help with?"

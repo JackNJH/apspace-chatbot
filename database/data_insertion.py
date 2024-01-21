@@ -121,24 +121,6 @@ def insert_sample_data():
                 (33000.0, 24000.0, 9000.0),
             ])
 
-            #ATTENDANCE
-            #take note that the semesters are the same as the ones in the results table for consistency
-            cursor.executemany('''
-                INSERT INTO attendance (subject_id, semester, percentage)
-                VALUES (?, ?, ?)
-            ''', [
-                (1, 5, 95.0),
-                (2, 5, 100.0),
-                (3, 5, 87.3),
-                (4, 5, 90.0),
-                (5, 4, 93.0),
-                (6, 4, 95.2),
-                (7, 3, 88.0),
-                (8, 3, 100.0),
-                (9, 1, 100.0),
-                (10, 1, 98.0),
-            ])
-
             # LIBRARY STUFF
             meeting_rooms_data = [
                 ('Room 1',),

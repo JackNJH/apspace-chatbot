@@ -75,17 +75,6 @@ def initialize_database():
                 )
             ''')
 
-            #ATTENDANCE
-            cursor.execute('''
-                CREATE TABLE IF NOT EXISTS attendance (
-                    attendance_id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    subject_id INTEGER,
-                    semester INTEGER,
-                    percentage REAL,
-                    FOREIGN KEY (subject_id) REFERENCES subjects(subject_id)
-                )
-            ''')
-
             #LIBRARY STUFF
             cursor.execute('''
                 CREATE TABLE IF NOT EXISTS meeting_rooms (
