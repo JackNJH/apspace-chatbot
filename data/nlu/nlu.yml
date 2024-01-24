@@ -1,6 +1,56 @@
 version: "3.1"
 
 nlu:
+# FUNCTIONS
+#TIMETABLE
+- intent: ask_timetable
+  examples: |
+    - timetable
+    - schedule
+    - what's on my schedule
+    - check my timetable
+    - can i see my timetable?
+
+- intent: inform_timetable_type
+  examples: |
+    - [class](timetable_type) timetable please
+    - [bus](timetable_type) timetable please
+    - i wanna know my [class](timetable_type) schedule
+    - what [class](timetable_type) do i have
+    - i wanna know about the [bus](timetable_type) schedule
+    - when is the last [bus](timetable_type)
+    - when is the next [bus](timetable_type)
+    - is the [bus](timetable_type) coming yet
+    - where is my next [class](timetable_type)
+
+- intent: inform_bus_type
+  examples: |
+    - from [APU](origin_location) to [LRT](destination_location)
+    - from [LRT](origin_location) to [APU](destination_location)
+    - from [APU](origin_location) to [FORTUNE PARK](destination_location)
+    - from [FORTUNE PARK](origin_location) to [APU](destination_location)
+
+- intent: inform_class_timetable_type
+  examples: |
+    - [next](class_timetable_type)
+    - [today](class_timetable_type)
+    - [whole](class_timetable_type)
+    - can I see my [next](class_timetable_type) class
+    - what's my [next](class_timetable_type) class
+    - when is the [next](class_timetable_type) class
+    - what are my upcoming [next](class_timetable_type) classes
+    - any [next](class_timetable_type) class
+    - can I see the [whole](class_timetable_type) timetable
+    - show me the entire [whole](class_timetable_type) timetable
+    - I want to know all [whole](class_timetable_type) classes today
+    - show [whole](class_timetable_type) classes
+    - what's on the [whole](class_timetable_type) schedule
+    - what classes are there [whole](class_timetable_type)
+    - what is on my schedule [today](class_timetable_type)
+    - what lessons are there [today](class_timetable_type)
+    - any classes scheduled [today](class_timetable_type)
+
+
 #SYNONYMS
 - synonym: next
   examples: |
@@ -30,87 +80,18 @@ nlu:
     - lesson
     - courses
 
-# CHAT 
-- intent: greet
+- synonym: APU
   examples: |
-    - hey
-    - hello
-    - hi
-    - yo wassup
-    - whasgood
+    - apu
+    - asia pacific uni
+    - uni
+    - university
 
-- intent: thank
+- synonym: LRT
   examples: |
-    - thanks
-    - appreciate it
-  
-- intent: bye
-  examples: |
-    - bye
-    - see ya
-    - cya
-    - goodbye
-  
-- intent: cancel
-  examples: |
-    - nevermind
-    - nvm
-    - nothing
-    - ntg
-    - nah
-    - no
-    - its aight
-    - its alright
-  
-- intent: stall
-  examples: |
-    - i see
-    - oh
-    - dang
-    - damn
-    - alright
-    - cool
-
-# FUNCTIONS
-#TIMETABLE
-- intent: ask_timetable
-  examples: |
-    - timetable
-    - schedule
-    - what's on my schedule
-    - check my timetable
-    - can i see my timetable?
-
-- intent: inform_timetable_type
-  examples: |
-    - [class](timetable_type) please
-    - [bus](timetable_type) please
-    - i wanna know my [class](timetable_type)
-    - what [class](timetable_type) do i have
-    - i wanna know about the [bus](timetable_type)
-    - when is the last [bus](timetable_type)
-    - when is the next [bus](timetable_type)
-    - is the [bus](timetable_type) coming yet
-    - where is my next [class](timetable_type)
-
-- intent: inform_class_timetable_type
-  examples: |
-    - [next](class_timetable_type)
-    - [today](class_timetable_type)
-    - [whole](class_timetable_type)
-    - can I see my [next](class_timetable_type) class
-    - what's my [next](class_timetable_type) class
-    - when is the [next](class_timetable_type) class
-    - what are my upcoming [next](class_timetable_type) classes
-    - any [next](class_timetable_type) class
-    - can I see the [whole](class_timetable_type) timetable
-    - show me the entire [whole](class_timetable_type) timetable
-    - I want to know all [whole](class_timetable_type) classes today
-    - show [whole](class_timetable_type) classes
-    - what's on the [whole](class_timetable_type) schedule
-    - what classes are there [whole](class_timetable_type)
-    - what is on my schedule [today](class_timetable_type)
-    - what lessons are there [today](class_timetable_type)
-    - any classes scheduled [today](class_timetable_type)
-
+    - lrt
+    - bukit jalil
+    - bj
+    - train station
+    - train
 

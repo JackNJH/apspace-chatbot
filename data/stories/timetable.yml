@@ -1,37 +1,18 @@
 version: "3.1"
 
 stories:
-#CHAT
-- story: greet
-  steps:
-  - intent: greet
-  - action: utter_begin
-
-- story: cancel
-  steps:
-  - intent: cancel
-  - action: utter_cancel
-
-- story: bye
-  steps:
-  - intent: bye
-  - action: utter_bye
-
-- story: thanks
-  steps:
-  - intent: thank
-  - action: utter_thanks
-
-- story: stall
-  steps:
-  - intent: stall
-  - action: utter_stall 
-
-
-#FUNCTIONS
 #TIMETABLE
 # BUS
-
+- story: user asks for bus timetable
+  steps:
+    - intent: ask_timetable
+    - action: utter_ask_timetable_type
+    - intent: inform_timetable_type
+      entities:
+        - timetable_type: bus
+    - action: utter_ask_bus_type
+    - intent: inform_bus_type
+    - action: action_show_next_bus
 
 # CLASS
 - story: user asks for class timetable

@@ -1,0 +1,43 @@
+version: "3.1"
+
+nlu:
+# CHAT 
+- intent: greet
+  examples: |
+    - hey
+    - hello
+    - hi
+    - yo wassup
+    - whasgood
+
+- intent: thank
+  examples: |
+    - thanks
+    - appreciate it
+  
+- intent: bye
+  examples: |
+    - bye
+    - see ya
+    - cya
+    - goodbye
+  
+- intent: cancel
+  examples: |
+    - nevermind
+    - nvm
+    - nothing
+    - ntg
+    - nah
+    - no
+    - its aight
+    - its alright
+  
+- intent: stall
+  examples: |
+    - i see
+    - oh
+    - dang
+    - damn
+    - alright
+    - cool
