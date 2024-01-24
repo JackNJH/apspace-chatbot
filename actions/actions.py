@@ -3,8 +3,9 @@ from typing import Any, Text, Dict, List, Union
 from rasa_sdk import Action, Tracker, FormValidationAction
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.events import SlotSet
+from datetime import datetime
 
-
+#BUS
 class ActionBusSchedule(Action):
     def name(self):
         return "action_show_next_bus"
@@ -16,7 +17,20 @@ class ActionBusSchedule(Action):
         schedule = get_bus_schedule(origin_location, destination_location)
 
         if schedule:
-            response = f"The bus schedule from {origin_location} to {destination_location} is: {schedule}"
+            # Extract start_time values from the tuples and convert to datetime objects
+            start_times = [datetime.strptime(time[0], '%I:%M %p') for time in schedule]
+
+            # Find the next closest bus time relative to the current time
+            current_time = datetime.now()
+            next_closest_time = next((time for time in start_times if time > current_time), None)
+
+            # Create the response message with all start_time values
+            formatted_start_times = [time.strftime('%I:%M %p') for time in start_times]
+            response = f"The bus schedule from {origin_location} to {destination_location} is:\n{', '.join(formatted_start_times)}"
+
+            if next_closest_time:
+                next_closest_time_str = next_closest_time.strftime('%I:%M %p')
+                response += f"\n\nThe next closest bus is at {next_closest_time_str}."
         else:
             response = "No schedule found for the specified route."
 
@@ -24,6 +38,14 @@ class ActionBusSchedule(Action):
         return []
 
 
+class ActionResetBusSlots(Action):
+    def name(self):
+        return "action_reset_bus_slots"
+
+    def run(self, dispatcher, tracker, domain):
+        return [SlotSet("origin_location", None), SlotSet("destination_location", None)]
+    
+#CLASS
 class ActionShowTimetable(Action):
     def name(self):
         return 'action_show_class_timetable'

@@ -21,6 +21,7 @@ intents:
 actions:
   - action_show_class_timetable
   - action_show_next_bus
+  - action_reset_bus_slots
 
 entities:
   - class_timetable_type

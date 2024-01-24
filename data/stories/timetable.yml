@@ -1,7 +1,8 @@
 version: "3.1"
 
 stories:
-#TIMETABLE
+# TIMETABLE
+
 # BUS
 - story: user asks for bus timetable
   steps:
@@ -10,43 +11,73 @@ stories:
     - intent: inform_timetable_type
       entities:
         - timetable_type: bus
+    - slot_was_set:
+      - timetable_type: bus
     - action: utter_ask_bus_type
     - intent: inform_bus_type
     - action: action_show_next_bus
+    - action: action_reset_bus_slots
+
+- story: user asks for bus timetable directly
+  steps:
+    - intent: inform_timetable_type
+      entities:
+        - timetable_type: bus
+    - slot_was_set:
+      - timetable_type: bus
+    - action: utter_ask_bus_type
+    - intent: inform_bus_type
+    - action: action_show_next_bus
+    - action: action_reset_bus_slots
 
 # CLASS
-- story: user asks for class timetable
+- story: user asks for next class timetable
   steps:
     - intent: ask_timetable
     - action: utter_ask_timetable_type
     - intent: inform_timetable_type
       entities:
         - timetable_type: class
-    - checkpoint: class_timetable_checkpoint
-
-- story: user wants to see the next class
-  steps:
-    - checkpoint: class_timetable_checkpoint
+    - slot_was_set:
+      - timetable_type: class
     - action: utter_ask_class_timetable_type
     - intent: inform_class_timetable_type
       entities:
         - class_timetable_type: next
+    - slot_was_set:
+      - class_timetable_type: next
     - action: action_show_class_timetable
 
-- story: user wants to see today's class
+- story: user asks for today's class timetable
   steps:
-    - checkpoint: class_timetable_checkpoint
+    - intent: ask_timetable
+    - action: utter_ask_timetable_type
+    - intent: inform_timetable_type
+      entities:
+        - timetable_type: class
+    - slot_was_set:
+      - timetable_type: class
     - action: utter_ask_class_timetable_type
     - intent: inform_class_timetable_type
       entities:
         - class_timetable_type: today
+    - slot_was_set:
+      - class_timetable_type: today
     - action: action_show_class_timetable
 
-- story: user wants to see this week class
+- story: user asks for the whole class timetable
   steps:
-    - checkpoint: class_timetable_checkpoint
+    - intent: ask_timetable
+    - action: utter_ask_timetable_type
+    - intent: inform_timetable_type
+      entities:
+        - timetable_type: class
+    - slot_was_set:
+      - timetable_type: class
     - action: utter_ask_class_timetable_type
     - intent: inform_class_timetable_type
       entities:
-        - class_timetable_type: week
+        - class_timetable_type: whole
+    - slot_was_set:
+      - class_timetable_type: whole
     - action: action_show_class_timetable

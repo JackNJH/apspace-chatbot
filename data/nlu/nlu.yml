@@ -6,6 +6,7 @@ nlu:
 - intent: ask_timetable
   examples: |
     - timetable
+    - timetable please
     - schedule
     - what's on my schedule
     - check my timetable
@@ -41,6 +42,8 @@ nlu:
     - what are my upcoming [next](class_timetable_type) classes
     - any [next](class_timetable_type) class
     - can I see the [whole](class_timetable_type) timetable
+    - can i see the [whole](class_timetable_type) week?
+    - what about the [whole](class_timetable_type) week
     - show me the entire [whole](class_timetable_type) timetable
     - I want to know all [whole](class_timetable_type) classes today
     - show [whole](class_timetable_type) classes
@@ -86,6 +89,7 @@ nlu:
     - asia pacific uni
     - uni
     - university
+    - college
 
 - synonym: LRT
   examples: |
@@ -94,4 +98,5 @@ nlu:
     - bj
     - train station
     - train
+    - station
 

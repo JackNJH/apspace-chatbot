@@ -9,7 +9,7 @@ def get_bus_schedule(origin_location, destination_location):
         cursor.execute('''
             SELECT start_time FROM bus_schedule
             WHERE route = ?
-        ''', (f"{origin_location} to {destination_location}"))
+        ''', (f"{origin_location} to {destination_location}",))
 
         schedule = cursor.fetchall()
         return schedule
