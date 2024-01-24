@@ -3,3 +3,4 @@ venv/
 models/
 *.db
 *pyc
+*.dot

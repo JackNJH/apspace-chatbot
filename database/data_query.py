@@ -1,12 +1,28 @@
 import sqlite3
 from datetime import datetime, timedelta
 
+def get_bus_schedule(origin_location, destination_location):
+    with sqlite3.connect('database.db') as connection:
+        cursor = connection.cursor()
+
+        #Get next bus departure time for that route
+        cursor.execute('''
+            SELECT start_time FROM bus_schedule
+            WHERE route = ?
+        ''', (f"{origin_location} to {destination_location}"))
+
+        schedule = cursor.fetchall()
+        return schedule
+
 def get_next_class():
     try:
         current_day_of_week = datetime.now().strftime('%A')
         current_time = datetime.now().strftime('%I:%M %p')
 
-        with sqlite3.connect('timetable.db') as connection:
+        print(current_day_of_week)
+        print(current_time)
+
+        with sqlite3.connect('database.db') as connection:
             cursor = connection.cursor()
 
             # Get the next class for the current day
@@ -47,7 +63,7 @@ def get_next_class():
 
 def get_all_classes():
     try:
-        with sqlite3.connect('timetable.db') as connection:
+        with sqlite3.connect('database.db') as connection:
             cursor = connection.cursor()
             cursor.execute('''
                 SELECT cs.subject_name, cs.class_type, cs.day_of_week, cs.start_time, cs.classroom_id
@@ -64,7 +80,7 @@ def get_today_classes():
     try:
         current_day_of_week = datetime.now().strftime('%A')
 
-        with sqlite3.connect('timetable.db') as connection:
+        with sqlite3.connect('database.db') as connection:
             cursor = connection.cursor()
             cursor.execute('''
                 SELECT cs.subject_name, cs.class_type, cs.day_of_week, cs.start_time, cs.classroom_id
@@ -82,7 +98,7 @@ def get_today_classes():
 
 #Call function to clear table's data
 def clear_all_data():
-    with sqlite3.connect('timetable.db') as connection:
+    with sqlite3.connect('database.db') as connection:
         cursor = connection.cursor()
         cursor.execute('DROP TABLE IF EXISTS classrooms')
         cursor.execute('DROP TABLE IF EXISTS class_schedule')

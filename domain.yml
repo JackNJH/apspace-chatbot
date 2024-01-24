@@ -10,21 +10,41 @@ intents:
 
   #TIMETABLE
   - ask_timetable
-  - inform_timetable_type
-  - inform_class_timetable_type
+  - inform_timetable_type:
+      use_entities: []
+  - inform_class_timetable_type:
+      use_entities: []
+  - inform_bus_type:
+      use_entities: []
 
 
 actions:
   - action_show_class_timetable
-
+  - action_show_next_bus
 
 entities:
   - class_timetable_type
   - timetable_type
+  - origin_location
+  - destination_location
 
 slots:
+#TIMETABLE 
+  timetable_type:
+    type: categorical
+    influence_conversation: true
+    values:
+      - bus
+      - class
+    mappings:
+      - intent: inform_timetable_type
+        type: from_entity
+        entity: timetable_type
+
+#CLASS
   class_timetable_type:
     type: categorical
+    influence_conversation: true
     values:
       - next
       - week
@@ -33,6 +53,31 @@ slots:
       - intent: inform_class_timetable_type
         type: from_entity
         entity: class_timetable_type
+
+#BUS
+  origin_location:
+    type: categorical
+    influence_conversation: true
+    values:
+      - APU
+      - LRT
+      - FORTUNE PARK
+    mappings:
+      - intent: inform_bus_type
+        type: from_entity
+        entity: origin_location
+
+  destination_location:
+    type: categorical
+    influence_conversation: true
+    values:
+      - APU
+      - LRT
+      - FORTUNE PARK
+    mappings:
+      - intent: inform_bus_type
+        type: from_entity
+        entity: destination_location
 
 
 responses:
@@ -67,13 +112,13 @@ responses:
   #FUNCTIONS:
   #TIMETABLE
   utter_ask_timetable_type:
-  - text: "It seems you are asking for a timetable. Which timetable do you wish to know?" 
+  - text: "It seems like you are asking for a timetable. What schedule would you like to know?"
 
   utter_ask_class_timetable_type:
   - text: "Would you like to know your next class, today's class or your whole timetable?"
 
   utter_ask_bus_type:
-  - text: "Which bus schedule would you like to know? (From where to where)"
+  - text: "Which bus route would you like to know about? (From where to where)"
 
   #CONFIG
 session_config:

@@ -5,7 +5,7 @@ import sqlite3
 
 def insert_sample_data():
     try:
-        with sqlite3.connect('timetable.db') as connection:
+        with sqlite3.connect('database.db') as connection:
             cursor = connection.cursor()
             
             #CLASSROOMS & SCHEDULES

@@ -1,7 +1,7 @@
 import sqlite3
 from initialization import initialize_database
 from data_insertion import insert_sample_data
-from data_query import get_next_class, get_all_classes, clear_all_data, get_today_classes
+from data_query import get_next_class, get_all_classes, clear_all_data, get_today_classes, get_bus_schedule
 
 # initialize_database()
 # insert_sample_data()
@@ -18,7 +18,7 @@ def main():
 
 def show_all_tables_and_data():
     try:
-        with sqlite3.connect('timetable.db') as connection:
+        with sqlite3.connect('database.db') as connection:
             cursor = connection.cursor()
 
             # Get the list of tables in the database
@@ -45,6 +45,6 @@ def show_all_tables_and_data():
         print(f"Error showing tables and data: {e}")
 
 
-show_all_tables_and_data()
-# main()
+# show_all_tables_and_data()
+main()
 # clear_all_data()

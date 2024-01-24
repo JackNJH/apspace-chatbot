@@ -1,8 +1,28 @@
-#You can do `rasa run actions` in a separate terminal while using the chatbot to save time if you forgot to do that/ it randomly isnt running. 
-from database.data_query import get_next_class, get_all_classes, get_today_classes
-from typing import Any, Text, Dict, List
-from rasa_sdk import Action, Tracker
+from database.data_query import get_next_class, get_all_classes, get_today_classes, get_bus_schedule
+from typing import Any, Text, Dict, List, Union
+from rasa_sdk import Action, Tracker, FormValidationAction
 from rasa_sdk.executor import CollectingDispatcher
+from rasa_sdk.events import SlotSet
+
+
+class ActionBusSchedule(Action):
+    def name(self):
+        return "action_show_next_bus"
+
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain):
+        origin_location = tracker.get_slot("origin_location")
+        destination_location = tracker.get_slot("destination_location")
+
+        schedule = get_bus_schedule(origin_location, destination_location)
+
+        if schedule:
+            response = f"The bus schedule from {origin_location} to {destination_location} is: {schedule}"
+        else:
+            response = "No schedule found for the specified route."
+
+        dispatcher.utter_message(response)
+        return []
+
 
 class ActionShowTimetable(Action):
     def name(self):
@@ -39,7 +59,7 @@ class ActionShowTimetable(Action):
             if today_classes:
                 response = "Here are today's classes:\n"
                 for class_info in today_classes:
-                    response += f"{class_info[0]} {class_info[1]} on {class_info[2]} at {class_info[3]} to {class_info[4]} in {class_info[5]}\n"
+                    response += f"{class_info[0]} {class_info[1]} on {class_info[2]} at {class_info[3]} in {class_info[4]}\n"
             else:
                 response = "There are no classes scheduled for today."
 
