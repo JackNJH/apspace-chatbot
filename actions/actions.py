@@ -1,9 +1,30 @@
-from database.data_query import get_next_class, get_all_classes, get_today_classes, get_bus_schedule
+from database.data_query import get_next_class, get_all_classes, get_today_classes, get_bus_schedule, get_free_classrooms
 from typing import Any, Text, Dict, List, Union
 from rasa_sdk import Action, Tracker, FormValidationAction
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.events import SlotSet
 from datetime import datetime
+
+#FREE_CLASS
+class ActionFreeClassrooms(Action):
+    def name(self):
+        return "action_show_free_classrooms"
+
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain):
+        day_of_week = datetime.now().strftime('%A')
+        current_time = datetime.now().strftime('%I:%M %p')
+
+        print(f"Day of the week: {day_of_week}")
+        free_classrooms = get_free_classrooms(day_of_week, current_time)
+
+        if free_classrooms:
+            response = f"The available classrooms for more than an hour from now are:\n"
+            response += "\n".join([f"{classroom[0]} (Block: {classroom[1]}, Floor: {classroom[2]})" for classroom in free_classrooms])
+        else:
+            response = f"No available classrooms on {day_of_week} at {current_time}."
+
+        dispatcher.utter_message(response)
+        return []
 
 #BUS
 class ActionBusSchedule(Action):
@@ -18,19 +39,20 @@ class ActionBusSchedule(Action):
 
         if schedule:
             # Extract start_time values from the tuples and convert to datetime objects
-            start_times = [datetime.strptime(time[0], '%I:%M %p') for time in schedule]
+            start_times = [time[0] for time in schedule]
 
             # Find the next closest bus time relative to the current time
-            current_time = datetime.now()
-            next_closest_time = next((time for time in start_times if time > current_time), None)
+            current_time = datetime.now().strftime('%I:%M %p')
+
+            earliest_start_time = min((time for time in start_times if time >= current_time), default=None)
 
             # Create the response message with all start_time values
-            formatted_start_times = [time.strftime('%I:%M %p') for time in start_times]
-            response = f"The bus schedule from {origin_location} to {destination_location} is:\n{', '.join(formatted_start_times)}"
+            response = f"The bus schedule from {origin_location} to {destination_location} is:\n{', '.join(start_times)}"
 
-            if next_closest_time:
-                next_closest_time_str = next_closest_time.strftime('%I:%M %p')
-                response += f"\n\nThe next closest bus is at {next_closest_time_str}."
+            if earliest_start_time:
+                response += f"\n\nThe next closest bus is at {earliest_start_time}."
+            else:
+                response += "\n\nThere's no more buses for that route today."
         else:
             response = "No schedule found for the specified route."
 
@@ -61,7 +83,7 @@ class ActionShowTimetable(Action):
             if next_class:
                response = f"Your next class is {next_class[0]} {next_class[1]}.\nIt's on {next_class[2]} at {next_class[3]} to {next_class[4]} in {next_class[5]}."
             else:
-                response = "There are no upcoming classes in the timetable."
+                response = "There are no more upcoming classes today."
 
         elif timetable_type == 'whole':
             # Logic to show the whole timetable

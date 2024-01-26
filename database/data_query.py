@@ -5,7 +5,7 @@ def get_bus_schedule(origin_location, destination_location):
     with sqlite3.connect('database.db') as connection:
         cursor = connection.cursor()
 
-        #Get next bus departure time for that route
+        # Get next bus departure time for that route
         cursor.execute('''
             SELECT start_time FROM bus_schedule
             WHERE route = ?
@@ -19,9 +19,6 @@ def get_next_class():
         current_day_of_week = datetime.now().strftime('%A')
         current_time = datetime.now().strftime('%I:%M %p')
 
-        print(current_day_of_week)
-        print(current_time)
-
         with sqlite3.connect('database.db') as connection:
             cursor = connection.cursor()
 
@@ -30,31 +27,12 @@ def get_next_class():
                 SELECT subject_name, class_type, day_of_week, start_time, end_time, c.classroom_id
                 FROM class_schedule cs
                 INNER JOIN classrooms c ON cs.classroom_id = c.classroom_id
-                WHERE day_of_week = ? AND start_time >= ?
+                WHERE day_of_week = ? AND strftime('%I:%M %p', start_time) >= ?
                 ORDER BY start_time
                 LIMIT 1
             ''', (current_day_of_week, current_time))
 
             next_class = cursor.fetchone()
-
-            # If no more classes for the current day, find the earliest class for the next available day
-            if not next_class:
-                next_day = (datetime.now() + timedelta(days=1)).strftime('%A')
-
-                # Loop until a day with classes is found
-                while not next_class:
-                    cursor.execute('''
-                        SELECT subject_name, class_type, day_of_week, start_time, end_time, c.classroom_id
-                        FROM class_schedule cs
-                        INNER JOIN classrooms c ON cs.classroom_id = c.classroom_id
-                        WHERE day_of_week = ?
-                        ORDER BY start_time
-                        LIMIT 1
-                    ''', (next_day,))
-                    next_class = cursor.fetchone()
-
-                    # Move to the next day
-                    next_day = (datetime.strptime(next_day, '%A') + timedelta(days=1)).strftime('%A')
 
         return next_class
     except sqlite3.Error as e:
@@ -95,8 +73,33 @@ def get_today_classes():
         print(f"SQLite error: {e}")
         return None
 
+def get_free_classrooms(day_of_week, current_time):
+    with sqlite3.connect('database.db') as connection:
+        cursor = connection.cursor()
+    
+        # Calculate the minimum free time as current time + 1 hour
+        end_time = (datetime.strptime(current_time, '%I:%M %p') + timedelta(hours=1)).strftime('%I:%M %p')
 
-#Call function to clear table's data
+        # Get all class schedules for the specified day and time
+        cursor.execute('''
+            SELECT c.classroom_id, c.class_block, c.class_floor
+            FROM classrooms c
+            LEFT JOIN class_schedule s ON c.classroom_id = s.classroom_id
+            WHERE (s.day_of_week = ? AND 
+                   NOT (? BETWEEN strftime('%I:%M %p', s.start_time) AND strftime('%I:%M %p', s.end_time)
+                    OR ? BETWEEN strftime('%I:%M %p', s.start_time) AND strftime('%I:%M %p', s.end_time)))
+                  OR strftime('%I:%M %p', s.start_time) IS NULL
+        ''', (day_of_week, current_time, end_time))
+
+        free_classrooms = cursor.fetchall()
+        print(free_classrooms)
+
+        return free_classrooms
+
+        
+
+
+# Call function to clear table's data
 def clear_all_data():
     with sqlite3.connect('database.db') as connection:
         cursor = connection.cursor()

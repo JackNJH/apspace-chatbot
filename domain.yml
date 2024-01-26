@@ -1,14 +1,14 @@
 version: "3.1"
 
 intents:
-  #CHAT
+  # CHAT
   - greet
   - thank
   - cancel
   - bye
   - stall
 
-  #TIMETABLE
+  # TIMETABLE
   - ask_timetable
   - inform_timetable_type:
       use_entities: []
@@ -16,12 +16,14 @@ intents:
       use_entities: []
   - inform_bus_type:
       use_entities: []
+  - ask_free_classrooms
 
 
 actions:
   - action_show_class_timetable
   - action_show_next_bus
   - action_reset_bus_slots
+  - action_show_free_classrooms
 
 entities:
   - class_timetable_type
@@ -30,7 +32,7 @@ entities:
   - destination_location
 
 slots:
-#TIMETABLE 
+# TIMETABLE 
   timetable_type:
     type: categorical
     influence_conversation: true
@@ -42,7 +44,7 @@ slots:
         type: from_entity
         entity: timetable_type
 
-#CLASS
+# CLASS
   class_timetable_type:
     type: categorical
     influence_conversation: true
@@ -55,7 +57,7 @@ slots:
         type: from_entity
         entity: class_timetable_type
 
-#BUS
+# BUS
   origin_location:
     type: categorical
     influence_conversation: true
@@ -82,7 +84,7 @@ slots:
 
 
 responses:
-  #CHAT
+  # CHAT
   utter_begin:
   - text: "Hey! How can I help you?"
   - text: "Hi! Do you need any help?"
@@ -110,8 +112,8 @@ responses:
   utter_default:
   - text: "Sorry... I can't help you."
 
-  #FUNCTIONS:
-  #TIMETABLE
+  # FUNCTIONS:
+  # TIMETABLE
   utter_ask_timetable_type:
   - text: "It seems like you are asking for a timetable. What schedule would you like to know?"
 
@@ -121,7 +123,7 @@ responses:
   utter_ask_bus_type:
   - text: "Which bus route would you like to know about? (From where to where)"
 
-  #CONFIG
+  # CONFIG
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true

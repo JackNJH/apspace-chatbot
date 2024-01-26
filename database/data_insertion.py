@@ -1,14 +1,14 @@
 import sqlite3
 
 #ADD MORE DATA OR REMOVE DATA AS YOU WISH
-#YOU CAN REMOVE DATA TO CREATE FALLBACKS RESPONSES FOR THE BOT LIKE (IF ASKED FOR SEM5 RESULTS BUT THERE IS NOTHING THEN WHAT RESPONSE ETC)
+# YOU CAN REMOVE DATA TO CREATE FALLBACKS RESPONSES FOR THE BOT LIKE (IF ASKED FOR SEM5 RESULTS BUT THERE IS NOTHING THEN WHAT RESPONSE ETC)
 
 def insert_sample_data():
     try:
         with sqlite3.connect('database.db') as connection:
             cursor = connection.cursor()
             
-            #CLASSROOMS & SCHEDULES
+            # CLASSROOMS & SCHEDULES
             cursor.executemany('''
                 INSERT INTO classrooms (classroom_id, class_block, class_floor)
                 VALUES (?, ?, ?)
@@ -24,6 +24,7 @@ def insert_sample_data():
                     ('Tech Lab 5-03', 'Tech Lab', '5th Floor'),
                 ])
 
+            # I only inserted a mock schedule which means only 1 USER'S schedule. More schedules can be added here to simulate an experience for MULTIPLE user's schedules
             cursor.executemany('''
                 INSERT INTO class_schedule (classroom_id, day_of_week, start_time, end_time, subject_name, class_type)
                 VALUES (?, ?, ?, ?, ?, ?)
@@ -63,8 +64,10 @@ def insert_sample_data():
                 ('LRT to APU', '02:00 PM'),
                 ('FORTUNE PARK to APU', '10:00 AM'),
                 ('FORTUNE PARK to APU', '02:00 PM'),
+                ('FORTUNE PARK to APU', '09:00 PM'),
                 ('APU to FORTUNE PARK', '12:00 PM'),
                 ('APU to FORTUNE PARK', '04:00 PM'),
+                ('APU to FORTUNE PARK', '11:00 PM'),
             ])
 
             # SUBJECTS
@@ -86,7 +89,7 @@ def insert_sample_data():
                 VALUES (?)
             ''', subjects_data)
 
-            #RESULTS
+            # RESULTS
             cursor.executemany('''
                 INSERT INTO results (subject_id, semester, gpa)
                 VALUES (?, ?, ?)
@@ -103,8 +106,8 @@ def insert_sample_data():
                 (10, 1, 4.0),
             ])
 
-            #APCARD (LATEST ACTIVITY)
-            #theres not really a need for multiple inputs for this one because the chatbot is only catered to 1 person right now anyway....
+            # APCARD (LATEST ACTIVITY)
+            # theres not really a need for multiple inputs for this one because the chatbot is only catered to 1 person right now anyway....
             cursor.executemany('''
                 INSERT INTO apcard (remaining_cash, spending_history, topup_history)
                 VALUES (?, ?, ?)
@@ -112,8 +115,8 @@ def insert_sample_data():
                 (100.0, 'Bought books', 'Added $50'),
             ])
 
-            #FEES
-            #theres not really a need for multiple inputs for this one because the chatbot is only catered to 1 person right now anyway....
+            # FEES
+            # theres not really a need for multiple inputs for this one because the chatbot is only catered to 1 person right now anyway....
             cursor.executemany('''
                 INSERT INTO pending_fees (total_amount, unpaid, paid)
                 VALUES (?, ?, ?)

@@ -46,5 +46,5 @@ def show_all_tables_and_data():
 
 
 # show_all_tables_and_data()
-main()
+# main()
 # clear_all_data()

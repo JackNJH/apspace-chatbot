@@ -2,7 +2,7 @@ version: "3.1"
 
 nlu:
 # FUNCTIONS
-#TIMETABLE
+# TIMETABLE
 - intent: ask_timetable
   examples: |
     - timetable
@@ -23,6 +23,11 @@ nlu:
     - when is the next [bus](timetable_type)
     - is the [bus](timetable_type) coming yet
     - where is my next [class](timetable_type)
+    - when is my [class](timetable_type) time
+    - [class](timetable_type) time
+    - [class](timetable_type) schedule
+    - [bus](timetable_type) time
+    - [bus](timetable_type) schedule 
 
 - intent: inform_bus_type
   examples: |
@@ -53,8 +58,29 @@ nlu:
     - what lessons are there [today](class_timetable_type)
     - any classes scheduled [today](class_timetable_type)
 
+# FREE_CLASS
+- intent: ask_free_classrooms
+  examples: |
+    - empty class
+    - empty class please
+    - empty room
+    - is there any empty classes
+    - what classes empty
+    - which room is empty
+    - empty classes from now
+    - empty rooms from now
+    - is there any empty rooms
+    - free class
+    - free room
+    - tell me free classes
+    - which room is free
+    - are there any free rooms
+    - are there any empty class
+    - where empty class
+    - where empty room
 
-#SYNONYMS
+
+# SYNONYMS
 - synonym: next
   examples: |
     - later

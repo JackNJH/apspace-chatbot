@@ -2,7 +2,6 @@ version: "3.1"
 
 stories:
 # TIMETABLE
-
 # BUS
 - story: user asks for bus timetable
   steps:
@@ -81,3 +80,56 @@ stories:
     - slot_was_set:
       - class_timetable_type: whole
     - action: action_show_class_timetable
+
+#DIRECT
+- story: user directly asks for next class timetable
+  steps:
+    - intent: inform_timetable_type
+      entities:
+        - timetable_type: class
+    - slot_was_set:
+      - timetable_type: class
+    - action: utter_ask_class_timetable_type
+    - intent: inform_class_timetable_type
+      entities:
+        - class_timetable_type: next
+    - slot_was_set:
+      - class_timetable_type: next
+    - action: action_show_class_timetable
+
+- story: user directly asks for today's class timetable
+  steps:
+    - intent: inform_timetable_type
+      entities:
+        - timetable_type: class
+    - slot_was_set:
+      - timetable_type: class
+    - action: utter_ask_class_timetable_type
+    - intent: inform_class_timetable_type
+      entities:
+        - class_timetable_type: today
+    - slot_was_set:
+      - class_timetable_type: today
+    - action: action_show_class_timetable
+
+- story: user directly asks for whole class timetable
+  steps:
+    - intent: inform_timetable_type
+      entities:
+        - timetable_type: class
+    - slot_was_set:
+      - timetable_type: class
+    - action: utter_ask_class_timetable_type
+    - intent: inform_class_timetable_type
+      entities:
+        - class_timetable_type: whole
+    - slot_was_set:
+      - class_timetable_type: whole
+    - action: action_show_class_timetable
+
+
+#CLASSROOM_FINDER
+- story: user asks for empty classrooms
+  steps: 
+    - intent: ask_free_classrooms
+    - action: action_show_free_classrooms
