@@ -109,10 +109,10 @@ def insert_sample_data():
             # APCARD (LATEST ACTIVITY)
             # theres not really a need for multiple inputs for this one because the chatbot is only catered to 1 person right now anyway....
             cursor.executemany('''
-                INSERT INTO apcard (remaining_cash, spending_history, topup_history)
-                VALUES (?, ?, ?)
+                INSERT INTO apcard (apcard_id, remaining_cash, spending_history, topup_history)
+                VALUES (?, ?, ?, ?)
             ''', [
-                (100.0, 'Bought books', 'Added $50'),
+                ('TP000001', 100.0, 'Bought books', 'Added $50'),
             ])
 
             # FEES

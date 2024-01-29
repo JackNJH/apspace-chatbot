@@ -17,6 +17,7 @@ intents:
   - inform_bus_type:
       use_entities: []
   - ask_free_classrooms
+  - ask_apcard_details
 
 
 actions:
@@ -24,6 +25,7 @@ actions:
   - action_show_next_bus
   - action_reset_bus_slots
   - action_show_free_classrooms
+  - action_show_apcard_details
 
 entities:
   - class_timetable_type

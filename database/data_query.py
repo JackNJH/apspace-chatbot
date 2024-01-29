@@ -2,17 +2,21 @@ import sqlite3
 from datetime import datetime, timedelta
 
 def get_bus_schedule(origin_location, destination_location):
-    with sqlite3.connect('database.db') as connection:
-        cursor = connection.cursor()
+    try:
+        with sqlite3.connect('database.db') as connection:
+            cursor = connection.cursor()
 
-        # Get next bus departure time for that route
-        cursor.execute('''
-            SELECT start_time FROM bus_schedule
-            WHERE route = ?
-        ''', (f"{origin_location} to {destination_location}",))
+            # Get next bus departure time for that route
+            cursor.execute('''
+                SELECT start_time FROM bus_schedule
+                WHERE route = ?
+            ''', (f"{origin_location} to {destination_location}",))
 
-        schedule = cursor.fetchall()
-        return schedule
+            schedule = cursor.fetchall()
+            return schedule
+    except sqlite3.Error as e:
+        print(f"SQLite error: {e}")
+        return None
 
 def get_next_class():
     try:
@@ -33,7 +37,7 @@ def get_next_class():
             ''', (current_day_of_week, current_time))
 
             next_class = cursor.fetchone()
-
+            
         return next_class
     except sqlite3.Error as e:
         print(f"SQLite error: {e}")
@@ -74,34 +78,49 @@ def get_today_classes():
         return None
 
 def get_free_classrooms(day_of_week, current_time):
-    with sqlite3.connect('database.db') as connection:
-        cursor = connection.cursor()
+    try:
+        with sqlite3.connect('database.db') as connection:
+            cursor = connection.cursor()
 
-        # Calculate the minimum free time as current time + 1 hour
-        end_time = (datetime.strptime(current_time, '%I:%M %p') + timedelta(hours=1)).strftime('%H:%M')
+            # Calculate the minimum free time as current time + 1 hour
+            end_time = (datetime.strptime(current_time, '%I:%M %p') + timedelta(hours=1)).strftime('%H:%M')
 
-        # Get all classrooms that are currently unoccupied
+            # Get all classrooms that are currently unoccupied
+            cursor.execute('''
+                SELECT c.classroom_id, c.class_block, c.class_floor
+                FROM classrooms c
+                LEFT JOIN class_schedule s ON c.classroom_id = s.classroom_id
+                WHERE (
+                    s.start_time IS NULL OR
+                    (s.start_time IS NOT NULL AND 
+                        ? NOT BETWEEN s.start_time AND s.end_time AND 
+                        ? NOT BETWEEN s.start_time AND s.end_time) OR
+                    (s.start_time IS NOT NULL AND s.end_time IS NOT NULL AND
+                        ? < s.start_time AND ? < s.end_time AND ? = s.day_of_week)
+                )
+            ''', (current_time, end_time, current_time, end_time, day_of_week))
+
+            free_classrooms = cursor.fetchall()
+            return free_classrooms
+    except sqlite3.Error as e:
+        print(f"SQLite error: {e}")
+        return None
+
+def get_apcard_details():
+    try:
+        with sqlite3.connect('database.db') as connection:
+            cursor = connection.cursor()
+
         cursor.execute('''
-            SELECT c.classroom_id, c.class_block, c.class_floor
-            FROM classrooms c
-            LEFT JOIN class_schedule s ON c.classroom_id = s.classroom_id
-            WHERE (
-                s.start_time IS NULL OR
-                (s.start_time IS NOT NULL AND 
-                    ? NOT BETWEEN s.start_time AND s.end_time AND 
-                    ? NOT BETWEEN s.start_time AND s.end_time) OR
-                (s.start_time IS NOT NULL AND s.end_time IS NOT NULL AND
-                    ? < s.start_time AND ? < s.end_time AND ? = s.day_of_week)
-            )
-        ''', (current_time, end_time, current_time, end_time, day_of_week))
+            SELECT * FROM apcard
+        ''')
 
-        free_classrooms = cursor.fetchall()
-        print(free_classrooms)
+        apcard_details = cursor.fetchall()
+        return apcard_details
+    except sqlite3.Error as e:
+        print(f"SQLite error: {e}")
+        return None
 
-        return free_classrooms
-
-
-        
 
 
 # Call function to clear table's data

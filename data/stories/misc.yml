@@ -1,0 +1,11 @@
+version: "3.1"
+
+stories:
+# MISCELLANEOUS
+- story: user ask for AP card details
+  steps:
+  - intent: ask_apcard_details
+  - action: action_show_apcard_details
+
+- story: user ask for school fees details
+

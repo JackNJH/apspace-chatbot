@@ -58,7 +58,7 @@ nlu:
     - what lessons are there [today](class_timetable_type)
     - any classes scheduled [today](class_timetable_type)
 
-# FREE_CLASS
+# FREE CLASS
 - intent: ask_free_classrooms
   examples: |
     - empty class
@@ -79,6 +79,21 @@ nlu:
     - where empty class
     - where empty room
 
+# APCARD DETAILS
+- intent: ask_apcard_details
+  examples: |
+    - can i see my apcard
+    - how much money do i have left
+    - money in apcard
+    - apcard balance
+    - apcard
+    - card
+    - money left
+    - how much money left
+    - balance left
+    - card details
+    - i want to see my apcard
+    - i want to see my apcard details
 
 # SYNONYMS
 - synonym: next

@@ -57,7 +57,7 @@ def initialize_database():
             #theres not really a need for multiple inputs for this one because the chatbot is only catered to 1 person right now anyway....
             cursor.execute('''
                 CREATE TABLE IF NOT EXISTS apcard (
-                    apcard_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    apcard_id TEXT PRIMARY KEY,
                     remaining_cash REAL,
                     spending_history TEXT,
                     topup_history TEXT
