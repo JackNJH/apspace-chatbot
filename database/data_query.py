@@ -27,7 +27,7 @@ def get_next_class():
                 SELECT subject_name, class_type, day_of_week, start_time, end_time, c.classroom_id
                 FROM class_schedule cs
                 INNER JOIN classrooms c ON cs.classroom_id = c.classroom_id
-                WHERE day_of_week = ? AND strftime('%I:%M %p', start_time) >= ?
+                WHERE day_of_week = ? AND cs.start_time >= ?
                 ORDER BY start_time
                 LIMIT 1
             ''', (current_day_of_week, current_time))
@@ -76,25 +76,30 @@ def get_today_classes():
 def get_free_classrooms(day_of_week, current_time):
     with sqlite3.connect('database.db') as connection:
         cursor = connection.cursor()
-    
-        # Calculate the minimum free time as current time + 1 hour
-        end_time = (datetime.strptime(current_time, '%I:%M %p') + timedelta(hours=1)).strftime('%I:%M %p')
 
-        # Get all class schedules for the specified day and time
+        # Calculate the minimum free time as current time + 1 hour
+        end_time = (datetime.strptime(current_time, '%I:%M %p') + timedelta(hours=1)).strftime('%H:%M')
+
+        # Get all classrooms that are currently unoccupied
         cursor.execute('''
             SELECT c.classroom_id, c.class_block, c.class_floor
             FROM classrooms c
             LEFT JOIN class_schedule s ON c.classroom_id = s.classroom_id
-            WHERE (s.day_of_week = ? AND 
-                   NOT (? BETWEEN strftime('%I:%M %p', s.start_time) AND strftime('%I:%M %p', s.end_time)
-                    OR ? BETWEEN strftime('%I:%M %p', s.start_time) AND strftime('%I:%M %p', s.end_time)))
-                  OR strftime('%I:%M %p', s.start_time) IS NULL
-        ''', (day_of_week, current_time, end_time))
+            WHERE (
+                s.start_time IS NULL OR
+                (s.start_time IS NOT NULL AND 
+                    ? NOT BETWEEN s.start_time AND s.end_time AND 
+                    ? NOT BETWEEN s.start_time AND s.end_time) OR
+                (s.start_time IS NOT NULL AND s.end_time IS NOT NULL AND
+                    ? < s.start_time AND ? < s.end_time AND ? = s.day_of_week)
+            )
+        ''', (current_time, end_time, current_time, end_time, day_of_week))
 
         free_classrooms = cursor.fetchall()
         print(free_classrooms)
 
         return free_classrooms
+
 
         
 
