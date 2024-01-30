@@ -34,7 +34,7 @@ def insert_sample_data():
                 ('B-04-03', 'Monday', '08:30 AM', '10:30 AM', 'Digital Security & Forensics', 'Tutorial'),
                 ('E-08-03', 'Tuesday', '08:30 AM', '10:30 AM', 'Java Programming', 'Lecture'),
                 ('B-07-09', 'Wednesday', '01:30 PM', '03:30 PM', 'Software Development Project', None),
-                ('B-05-05', 'Thursday', '08:30 AM', '10:30 AM', 'Introduction to AI ', 'Lecture'),
+                ('B-05-05', 'Thursday', '08:30 AM', '10:30 AM', 'Introduction to AI', 'Lecture'),
                 ('B-04-05', 'Friday', '08:30 AM', '10:30 AM', 'Digital Security & Forensics', 'Lecture'),
             ])
 

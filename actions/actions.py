@@ -98,7 +98,8 @@ class ActionShowTimetable(Action):
             next_class = get_next_class()
 
             if next_class:
-               response = f"Your next class is {next_class[0]} {next_class[1]}.\nIt's on {next_class[2]} at {next_class[3]} to {next_class[4]} in {next_class[5]}."
+               class_type = class_info[1] if class_info[1] is not None else ""
+               response = f"Your next class is {next_class[0]} {class_type}.\nIt's on {next_class[2]} at {next_class[3]} to {next_class[4]} in {next_class[5]}."
             else:
                 response = "There are no more upcoming classes today."
 
@@ -109,7 +110,8 @@ class ActionShowTimetable(Action):
             if all_classes:
                 response = "Here is the complete timetable:\n"
                 for class_info in all_classes:
-                    response += f"{class_info[0]} {class_info[1]} on {class_info[2]} at {class_info[3]} in {class_info[4]}\n"
+                    class_type = class_info[1] if class_info[1] is not None else ""
+                    response += f"{class_info[0]} {class_type} on {class_info[2]} at {class_info[3]} in {class_info[4]}\n"
             else:
                 response = "The timetable is currently empty."
 
@@ -120,7 +122,8 @@ class ActionShowTimetable(Action):
             if today_classes:
                 response = "Here are today's classes:\n"
                 for class_info in today_classes:
-                    response += f"{class_info[0]} {class_info[1]} on {class_info[2]} at {class_info[3]} in {class_info[4]}\n"
+                    class_type = class_info[1] if class_info[1] is not None else ""
+                    response += f"{class_info[0]} {class_type} on {class_info[2]} at {class_info[3]} in {class_info[4]}\n"
             else:
                 response = "There are no classes scheduled for today."
 
