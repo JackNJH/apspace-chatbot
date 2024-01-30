@@ -83,22 +83,23 @@ def get_free_classrooms(day_of_week, current_time):
             cursor = connection.cursor()
 
             # Calculate the minimum free time as current time + 1 hour
-            end_time = (datetime.strptime(current_time, '%I:%M %p') + timedelta(hours=1)).strftime('%H:%M')
+            end_time = (datetime.strptime(current_time, '%I:%M %p') + timedelta(hours=1)).strftime('%I:%M %p')
 
             # Get all classrooms that are currently unoccupied
             cursor.execute('''
                 SELECT c.classroom_id, c.class_block, c.class_floor
                 FROM classrooms c
-                LEFT JOIN class_schedule s ON c.classroom_id = s.classroom_id
-                WHERE (
-                    s.start_time IS NULL OR
-                    (s.start_time IS NOT NULL AND 
-                        ? NOT BETWEEN s.start_time AND s.end_time AND 
-                        ? NOT BETWEEN s.start_time AND s.end_time) OR
-                    (s.start_time IS NOT NULL AND s.end_time IS NOT NULL AND
-                        ? < s.start_time AND ? < s.end_time AND ? = s.day_of_week)
+                WHERE NOT EXISTS (
+                    SELECT 1
+                    FROM class_schedule s
+                    WHERE c.classroom_id = s.classroom_id
+                    AND s.day_of_week = ?
+                    AND (
+                        (s.start_time >= ? AND s.start_time <= ?) OR
+                        (s.end_time >= ? AND s.end_time <= ?)
+                    )
                 )
-            ''', (current_time, end_time, current_time, end_time, day_of_week))
+            ''', (day_of_week, current_time, end_time, current_time, end_time))
 
             free_classrooms = cursor.fetchall()
             return free_classrooms
