@@ -90,10 +90,44 @@ nlu:
     - card
     - money left
     - how much money left
-    - balance left
+    - card balance left
     - card details
     - i want to see my apcard
     - i want to see my apcard details
+    - check my card balance
+    - available funds in my apcard
+    - apcard information
+    - remaining balance on my card
+    - view my apcard details
+    - tell me about my apcard balance
+    - current balance on my card
+
+# PENDING FEES
+- intent: ask_pending_fees
+  examples: |
+    - fees
+    - school fees
+    - fee
+    - school fee
+    - pending fee
+    - pending fees
+    - how are my school fees
+    - what is the status of my fees
+    - check my outstanding fees
+    - outstanding school fees
+    - any fees due
+    - can you tell me about my pending fees
+    - show me the pending fees
+    - details of unpaid fees
+    - do I owe any fees
+    - is there any fee balance
+    - give me information about my fees
+    - remaining school fees
+    - balance in my school fees
+    - outstanding payment
+    - are there any outstanding payment for me
+    - tell me about my fee status
+
 
 # SYNONYMS
 - synonym: next

@@ -18,6 +18,7 @@ intents:
       use_entities: []
   - ask_free_classrooms
   - ask_apcard_details
+  - ask_pending_fees
 
 
 actions:
@@ -26,6 +27,7 @@ actions:
   - action_reset_bus_slots
   - action_show_free_classrooms
   - action_show_apcard_details
+  - action_show_pending_fees
 
 entities:
   - class_timetable_type

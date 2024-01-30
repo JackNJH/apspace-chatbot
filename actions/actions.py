@@ -1,47 +1,9 @@
-from database.data_query import get_next_class, get_all_classes, get_today_classes, get_bus_schedule, get_free_classrooms, get_apcard_details
+from database.data_query import get_next_class, get_all_classes, get_today_classes, get_bus_schedule, get_free_classrooms, get_apcard_details, get_fees_details
 from typing import Any, Text, Dict, List, Union
 from rasa_sdk import Action, Tracker, FormValidationAction
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.events import SlotSet
 from datetime import datetime
-
-# APCARD_DETAILS
-class ActionAPCardDetails(Action):
-    def name(self):
-        return "action_show_apcard_details"
-    
-    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain):
-        apcard_details = get_apcard_details()
-
-        if apcard_details:
-            for row in apcard_details:
-                apcard_id, remaining_cash, spending_history, topup_history = row
-                message = f"APCard ID: {apcard_id}\nRemaining Cash: {remaining_cash}\nLatest Spending History: {spending_history}\nLatest Topup History: {topup_history}"
-                dispatcher.utter_message(message)
-        else:
-            dispatcher.utter_message("Sorry, there was an issue fetching APCard details.")
-
-        return []
-
-# FREE_CLASS
-class ActionFreeClassrooms(Action):
-    def name(self):
-        return "action_show_free_classrooms"
-
-    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain):
-        day_of_week = datetime.now().strftime('%A')
-        current_time = datetime.now().strftime('%I:%M %p')
-
-        free_classrooms = get_free_classrooms(day_of_week, current_time)
-
-        if free_classrooms:
-            response = f"The available classrooms for more than an hour from now are:\n"
-            response += "\n".join([f"{classroom[0]} (Block: {classroom[1]}, Floor: {classroom[2]})" for classroom in free_classrooms])
-        else:
-            response = f"No available classrooms on {day_of_week} at {current_time}."
-
-        dispatcher.utter_message(response)
-        return []
 
 # BUS
 class ActionBusSchedule(Action):
@@ -128,4 +90,61 @@ class ActionShowTimetable(Action):
                 response = "There are no classes scheduled for today."
 
         dispatcher.utter_message(response)
+        return []
+    
+# FREE_CLASS
+class ActionFreeClassrooms(Action):
+    def name(self):
+        return "action_show_free_classrooms"
+
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain):
+        day_of_week = datetime.now().strftime('%A')
+        current_time = datetime.now().strftime('%I:%M %p')
+
+        free_classrooms = get_free_classrooms(day_of_week, current_time)
+
+        if free_classrooms:
+            response = f"The available classrooms for more than an hour from now are:\n"
+            response += "\n".join([f"{classroom[0]} (Block: {classroom[1]}, Floor: {classroom[2]})" for classroom in free_classrooms])
+        else:
+            response = f"No available classrooms on {day_of_week} at {current_time}."
+
+        dispatcher.utter_message(response)
+        return []
+
+# APCARD_DETAILS
+class ActionAPCardDetails(Action):
+    def name(self):
+        return "action_show_apcard_details"
+    
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain):
+        apcard_details = get_apcard_details()
+
+        if apcard_details:
+            for row in apcard_details:
+                apcard_id, remaining_cash, spending_history, topup_history = row
+                message = f"APCard ID: {apcard_id}\nRemaining Cash: {remaining_cash}\nLatest Spending History: {spending_history}\nLatest Topup History: {topup_history}"
+                dispatcher.utter_message(message)
+        else:
+            dispatcher.utter_message("Sorry, there was an issue fetching APCard details.")
+
+        return []
+    
+
+# FEES
+class ActionPendingFees(Action):
+    def name(self):
+        return "action_show_pending_fees"
+    
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain):
+        fees_details = get_fees_details()
+
+        if fees_details:
+            for row in fees_details:
+                total_amount, unpaid, paid = row
+                message = f"Total Course Fees: {total_amount}\nOutstanding Amount: {unpaid}\nPaid: {paid}"
+                dispatcher.utter_message(message)
+        else:
+            dispatcher.utter_message("Sorry, there was an issue fetching fee details.")
+
         return []

@@ -122,6 +122,22 @@ def get_apcard_details():
         print(f"SQLite error: {e}")
         return None
 
+def get_fees_details():
+    try:
+        with sqlite3.connect('database.db') as connection:
+            cursor = connection.cursor()
+
+        cursor.execute('''
+            SELECT total_amount, unpaid, paid FROM pending_fees
+        ''')
+
+        fees_details = cursor.fetchall()
+        return fees_details
+    except sqlite3.Error as e:
+        print(f"SQLite error: {e}")
+        return None
+
+
 
 
 # Call function to clear table's data

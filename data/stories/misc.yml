@@ -8,4 +8,6 @@ stories:
   - action: action_show_apcard_details
 
 - story: user ask for school fees details
-
+  steps:
+  - intent: ask_pending_fees
+  - action: action_show_pending_fees
