@@ -128,6 +128,8 @@ nlu:
     - are there any outstanding payment for me
     - tell me about my fee status
 
+# SUBJECT RESULTS
+- intent: ask_subject_results
 
 # SYNONYMS
 - synonym: next

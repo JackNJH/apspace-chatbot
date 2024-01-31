@@ -38,7 +38,7 @@ def initialize_database():
             #SUBJECTS
             cursor.execute('''
                 CREATE TABLE IF NOT EXISTS subjects (
-                    subject_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    subject_id TEXT PRIMARY KEY,
                     subject_name TEXT NOT NULL
                 )
             ''')
@@ -46,7 +46,7 @@ def initialize_database():
             cursor.execute('''
                 CREATE TABLE IF NOT EXISTS results (
                     result_id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    subject_id INTEGER,
+                    subject_id TEXT,
                     semester INTEGER,
                     gpa REAL,
                     FOREIGN KEY (subject_id) REFERENCES subjects(subject_id)

@@ -45,6 +45,6 @@ def show_all_tables_and_data():
         print(f"Error showing tables and data: {e}")
 
 
-# show_all_tables_and_data()
+show_all_tables_and_data()
 # main()
 # clear_all_data()

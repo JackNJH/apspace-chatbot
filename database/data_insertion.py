@@ -72,21 +72,21 @@ def insert_sample_data():
 
             # SUBJECTS
             subjects_data = [
-                ('Introduction to AI',),
-                ('Digital Security & Forensics',),
-                ('Java Programming',),
-                ('Software Development Project',),
-                ('Numerical Methods',),
-                ('Web Development',),
-                ('Programming with Python',),
-                ('Database Systems',),
-                ('Information Systems',),
-                ('Fundamentals of Entrepreneurship',),
+                ('IAI', 'Introduction to AI',),
+                ('DSF', 'Digital Security & Forensics',),
+                ('JP', 'Java Programming',),
+                ('SDP', 'Software Development Project',),
+                ('NM', 'Numerical Methods',),
+                ('WDT', 'Web Development',),
+                ('PWP', 'Programming with Python',),
+                ('DBS', 'Database Systems',),
+                ('IS', 'Information Systems',),
+                ('FEP', 'Fundamentals of Entrepreneurship',),
             ]
 
             cursor.executemany('''
-                INSERT INTO subjects (subject_name)
-                VALUES (?)
+                INSERT INTO subjects (subject_id, subject_name)
+                VALUES (?, ?)
             ''', subjects_data)
 
             # RESULTS
@@ -94,16 +94,16 @@ def insert_sample_data():
                 INSERT INTO results (subject_id, semester, gpa)
                 VALUES (?, ?, ?)
             ''', [
-                (1, 5, 3.3),
-                (2, 5, 3.7),
-                (3, 5, 2.3),
-                (4, 5, 2.0),
-                (5, 4, 3.0),
-                (6, 4, 2.7),
-                (7, 3, 3.0),
-                (8, 3, 2.3),
-                (9, 1, 4.0),
-                (10, 1, 4.0),
+                ('IAI', 5, 3.3),
+                ('DSF', 5, 3.7),
+                ('JP', 5, 2.3),
+                ('SDP', 5, 2.0),
+                ('NM', 4, 3.0),
+                ('WDT', 4, 2.7),
+                ('PWP', 3, 3.0),
+                ('DBS', 3, 2.3),
+                ('IS', 1, 4.0),
+                ('FEP', 1, 4.0),
             ])
 
             # APCARD (LATEST ACTIVITY)
