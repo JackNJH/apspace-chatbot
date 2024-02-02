@@ -3,10 +3,15 @@ version: "3.1"
 intents:
   # CHAT
   - greet
+  - ask_botmood
   - thank
   - cancel
   - bye
   - stall
+  - ask_howbuilt
+  - ask_isbot
+  - ask_whatspossible
+  - ask_botname
 
   # TIMETABLE
   - ask_timetable
@@ -27,7 +32,6 @@ intents:
 actions:
   - action_show_class_timetable
   - action_show_next_bus
-  - action_reset_bus_slots
   - action_show_free_classrooms
   - action_show_apcard_details
   - action_show_pending_fees
@@ -115,6 +119,10 @@ responses:
   - text: "Hi! Do you need any help?"
   - text: "Good day, what can I help with?"
 
+  utter_mood:
+  - text: "I'm always doing great! How can I help? (I'm not even alive)"
+  - text: "Never been better! Ready to help with anything."
+
   utter_cancel:
   - text: "Alright! Feel free to ask for assistance!"
   - text: "Ask again if you need anything!"
@@ -137,6 +145,32 @@ responses:
   utter_default:
   - text: "Sorry... I can't help you."
 
+  utter_howbuilt:
+  - text: "I was made in by using Python and Rasa AI!"
+
+  utter_isbot:
+  - text: "Yes, I am a bot designed for your convenience."
+  - text: "Of course. I have no capacity for consciousness."
+  - text: "You're right! I am a bunch of code stringed together."
+
+  utter_possibilities:
+  - text: |
+      Here are some things I can help you with:
+      
+      - Showing class schedule
+      - Showing bus schedule
+      - Showing free classrooms
+      - Showing apcard details
+      - Showing outstanding school fees
+      - Showing module results
+      - Booking a meeting room in the library
+
+      Please feel free to ask for help on any of these!
+
+  utter_name:
+  - text: "I'm APSpace's Chatbot! How can I help you?"
+  - text: "I'm APSpace Chatbot. Do you need any help?"
+
   # FUNCTIONS
   # TIMETABLE
   utter_ask_timetable_type:
@@ -151,6 +185,7 @@ responses:
 # SUBJECT RESULTS
   utter_ask_which_result:
   - text: "Is there a particular semester's result you would like to know?"
+
 
   # CONFIG
 session_config:

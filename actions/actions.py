@@ -36,15 +36,8 @@ class ActionBusSchedule(Action):
             response = "No schedule found for the specified route."
 
         dispatcher.utter_message(response)
-        return []
-
-
-class ActionResetBusSlots(Action):
-    def name(self):
-        return "action_reset_bus_slots"
-
-    def run(self, dispatcher, tracker, domain):
         return [SlotSet("origin_location", None), SlotSet("destination_location", None)]
+
     
 # CLASS
 class ActionShowTimetable(Action):

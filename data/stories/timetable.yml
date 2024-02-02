@@ -15,7 +15,6 @@ stories:
     - action: utter_ask_bus_type
     - intent: inform_bus_type
     - action: action_show_next_bus
-    - action: action_reset_bus_slots
 
 - story: user asks for bus timetable directly
   steps:
@@ -27,7 +26,6 @@ stories:
     - action: utter_ask_bus_type
     - intent: inform_bus_type
     - action: action_show_next_bus
-    - action: action_reset_bus_slots
 
 # CLASS
 - story: user asks for next class timetable

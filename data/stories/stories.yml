@@ -2,29 +2,53 @@ version: "3.1"
 
 stories:
 # CHAT
-- story: greet
+- story: user begins bot interaction
   steps:
   - intent: greet
   - action: utter_begin
 
-- story: cancel
+- story: user ask how bot is doing
+  steps:
+  - intent: ask_botmood
+  - action: utter_mood
+
+- story: user cancels / denies
   steps:
   - intent: cancel
   - action: utter_cancel
 
-- story: bye
+- story: user leaves
   steps:
   - intent: bye
   - action: utter_bye
 
-- story: thanks
+- story: user thanks bot
   steps:
   - intent: thank
   - action: utter_thanks
 
-- story: stall
+- story: user stalls
   steps:
   - intent: stall
   - action: utter_stall 
 
+- story: user ask how the bot is built
+  steps:
+  - intent: ask_howbuilt
+  - action: utter_howbuilt
+
+- story: user ask if bot is bot
+  steps:
+  - intent: ask_isbot
+  - action: utter_isbot
+
+- story: user ask what bot can do
+  steps:
+  - intent: ask_whatspossible
+  - action: utter_possibilities
+
+- story: user ask bot's name
+  steps:
+  - intent: ask_botname
+  - action: utter_name
 
