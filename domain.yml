@@ -17,9 +17,12 @@ intents:
   - inform_bus_type:
       use_entities: []
   - ask_free_classrooms
+
+  # MISCELLANEOUS
   - ask_apcard_details
   - ask_pending_fees
-
+  - ask_results
+  - inform_semester
 
 actions:
   - action_show_class_timetable
@@ -28,12 +31,16 @@ actions:
   - action_show_free_classrooms
   - action_show_apcard_details
   - action_show_pending_fees
+  - action_show_cgpa
+  - action_show_semester_results
+
 
 entities:
   - class_timetable_type
   - timetable_type
   - origin_location
   - destination_location
+  - semester_num
 
 slots:
 # TIMETABLE 
@@ -86,6 +93,20 @@ slots:
         type: from_entity
         entity: destination_location
 
+# SUBJECT RESULTS
+  semester:
+    type: categorical
+    influence_conversation: true
+    values:
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+    mappings:
+      - intent: inform_semester
+        type: from_entity
+        entity: semester_num
 
 responses:
   # CHAT
@@ -116,7 +137,7 @@ responses:
   utter_default:
   - text: "Sorry... I can't help you."
 
-  # FUNCTIONS:
+  # FUNCTIONS
   # TIMETABLE
   utter_ask_timetable_type:
   - text: "It seems like you are asking for a timetable. What schedule would you like to know?"
@@ -126,6 +147,10 @@ responses:
 
   utter_ask_bus_type:
   - text: "Which bus route would you like to know about? (From where to where)"
+
+# SUBJECT RESULTS
+  utter_ask_which_result:
+  - text: "Is there a particular semester's result you would like to know?"
 
   # CONFIG
 session_config:

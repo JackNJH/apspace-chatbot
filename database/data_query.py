@@ -137,6 +137,38 @@ def get_fees_details():
         print(f"SQLite error: {e}")
         return None
 
+def get_cgpa():
+    try:
+        with sqlite3.connect('database.db') as connection:
+            cursor = connection.cursor()
+
+        cursor.execute('''
+            SELECT AVG(gpa) FROM results
+        ''')
+
+        cgpa = cursor.fetchone()[0]
+
+        return cgpa
+    except sqlite3.Error as e:
+        print(f"SQLite error: {e}")
+        return None
+
+def get_results_by_semester(semester):
+    try:
+        with sqlite3.connect('database.db') as connection:
+            cursor = connection.cursor()
+
+        cursor.execute('''
+            SELECT subject_id, gpa
+            FROM results
+            WHERE semester = ?
+        ''', (semester,))
+
+        results = cursor.fetchall()
+        return results
+    except sqlite3.Error as e:
+        print(f"SQLite error: {e}")
+        return None
 
 
 

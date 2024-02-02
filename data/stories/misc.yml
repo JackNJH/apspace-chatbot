@@ -1,13 +1,83 @@
 version: "3.1"
 
 stories:
-# MISCELLANEOUS
+# APCARD
 - story: user ask for AP card details
   steps:
   - intent: ask_apcard_details
   - action: action_show_apcard_details
 
+# SCHOOL FEES
 - story: user ask for school fees details
   steps:
   - intent: ask_pending_fees
   - action: action_show_pending_fees
+
+# SUBJECT RESULTS
+- story: user ask for results | cancel
+  steps:
+  - intent: ask_results
+  - action: action_show_cgpa
+  - action: utter_ask_which_result
+  - intent: cancel
+  - action: utter_cancel
+
+- story: user ask for results | sem 
+  steps:
+  - intent: ask_results
+  - action: action_show_cgpa
+  - action: utter_ask_which_result
+  - intent: inform_semester
+    entities:
+      - semester_num: 1
+  - slot_was_set:
+    - semester: 1
+  - action: action_show_semester_results
+
+- story: user ask for results | sem 
+  steps:
+  - intent: ask_results
+  - action: action_show_cgpa
+  - action: utter_ask_which_result
+  - intent: inform_semester
+    entities:
+      - semester_num: 2
+  - slot_was_set:
+    - semester: 2
+  - action: action_show_semester_results
+
+- story: user ask for results | sem 
+  steps:
+  - intent: ask_results
+  - action: action_show_cgpa
+  - action: utter_ask_which_result
+  - intent: inform_semester
+    entities:
+      - semester_num: 3
+  - slot_was_set:
+    - semester: 3
+  - action: action_show_semester_results
+
+- story: user ask for results | sem 
+  steps:
+  - intent: ask_results
+  - action: action_show_cgpa
+  - action: utter_ask_which_result
+  - intent: inform_semester
+    entities:
+      - semester_num: 4
+  - slot_was_set:
+    - semester: 4
+  - action: action_show_semester_results
+
+- story: user ask for results | sem 
+  steps:
+  - intent: ask_results
+  - action: action_show_cgpa
+  - action: utter_ask_which_result
+  - intent: inform_semester
+    entities:
+      - semester_num: 5
+  - slot_was_set:
+    - semester: 5
+  - action: action_show_semester_results

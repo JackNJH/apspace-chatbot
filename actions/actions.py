@@ -1,4 +1,4 @@
-from database.data_query import get_next_class, get_all_classes, get_today_classes, get_bus_schedule, get_free_classrooms, get_apcard_details, get_fees_details
+from database.data_query import get_next_class, get_all_classes, get_today_classes, get_bus_schedule, get_free_classrooms, get_apcard_details, get_fees_details, get_cgpa, get_results_by_semester
 from typing import Any, Text, Dict, List, Union
 from rasa_sdk import Action, Tracker, FormValidationAction
 from rasa_sdk.executor import CollectingDispatcher
@@ -92,6 +92,7 @@ class ActionShowTimetable(Action):
         dispatcher.utter_message(response)
         return []
     
+
 # FREE_CLASS
 class ActionFreeClassrooms(Action):
     def name(self):
@@ -111,6 +112,7 @@ class ActionFreeClassrooms(Action):
 
         dispatcher.utter_message(response)
         return []
+
 
 # APCARD_DETAILS
 class ActionAPCardDetails(Action):
@@ -148,3 +150,43 @@ class ActionPendingFees(Action):
             dispatcher.utter_message("Sorry, there was an issue fetching fee details.")
 
         return []
+
+# SUBJECT RESULTS
+class ActionUtterCGPA(Action):
+    def name(self) -> Text:
+        return "action_show_cgpa"
+
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        cgpa = get_cgpa()
+
+        if cgpa: 
+            dispatcher.utter_message(text=f"Your Cumulative GPA (CGPA) is: {cgpa:.2f}")
+        else:
+            dispatcher.utter_message(text="Sorry, there was an issue fetching result details.")
+
+        return []
+
+
+class ActionShowSemesterResults(Action):
+    def name(self):
+        return 'action_show_semester_results'
+
+    def run(self, dispatcher, tracker, domain):
+        semester = tracker.get_slot('semester')
+
+        if semester:
+            results = get_results_by_semester(semester)
+            
+            if results:
+                message = f"Results for semester {semester}:\n"
+                for subject_id, gpa in results:
+                    message += f"{subject_id}: {gpa}GPA\n"
+            else:
+                message = f"No results available for semester {semester}."
+
+            dispatcher.utter_message(message)
+        else:
+            dispatcher.utter_message("I'm sorry, I couldn't understand the semester number.")
+
+        return [SlotSet('semester', None)] 
+

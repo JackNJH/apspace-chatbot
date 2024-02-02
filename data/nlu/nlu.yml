@@ -129,51 +129,128 @@ nlu:
     - tell me about my fee status
 
 # SUBJECT RESULTS
-- intent: ask_subject_results
+- intent: ask_results
+  examples: |
+    - results
+    - results please
+    - can I see my results
+    - what are my results
+    - what's my results
+    - what's my GPA
+    - GPA
+    - CGPA
+    - what's my CGPA
+    - semester results
+    - what's my semester results
+    - can I see GPA
+    - can I see CGPA
+    - show me my grades
+    - check my academic performance
+    - display my subject results
+    - tell me about my marks
+    - how did I perform this semester
+    - view my subject grades
+    - fetch my results
+    - get my GPA details
+    - get my CGPA information
+    - give me my subject results
+    - provide my academic performance
+    - show my subject-wise grades
+    - inform me about my semester performance
+    - retrieve my GPA
+    - bring up my CGPA
+
+- intent: inform_semester
+  examples: |
+    - [1](semester_num)
+    - [2](semester_num)
+    - [3](semester_num)
+    - [4](semester_num) 
+    - [5](semester_num)
+    - can i see semester [1](semester_num)
+    - sem [2](semester_num)
+    - semester [3](semester_num)
+    - sem [4](semester_num) please
+    - show me my sem [5](semester_num) results
+    - results for sem [1](semester_num)
+    - display semester [2](semester_num)
+    - view sem [3](semester_num)
+    - whats my sem [4](semester_num) 
+    - i want to see seme [5](semester_num)
+    - can you show my [1](semester_num) results
+    - tell me about my grades in semester [2](semester_num)
+    - display results for [3](semester_num)
+    - show sem [4](semester_num) GPA
+    - I'm curious about my performance in semester [5](semester_num)
+    - semester [1](semester_num) grades, please
+    - what's my GPA for [2](semester_num)
+    - give me details for [3](semester_num)
+    - tell me about sem [4](semester_num) performance
+    - display my grades for [5](semester_num)
 
 # SYNONYMS
-- synonym: next
-  examples: |
-    - later
-    - after this
-    - later on
-    - after
-    - now
+synonyms:
+  - synonym: next
+    examples: |
+      - later
+      - after this
+      - later on
+      - after
+      - now
 
-- synonym: whole
-  examples: |
-    - all
-    - complete
-    - week
-    - week's
-  
-- synonym: today
-  examples: |
-    - today's
+  - synonym: whole
+    examples: |
+      - all
+      - complete
+      - week
+      - week's
+    
+  - synonym: today
+    examples: |
+      - today's
 
-- synonym: class
-  examples: |
-    - classes
-    - class's 
-    - lessons
-    - course
-    - lesson
-    - courses
+  - synonym: class
+    examples: |
+      - classes
+      - class's 
+      - lessons
+      - course
+      - lesson
+      - courses
 
-- synonym: APU
-  examples: |
-    - apu
-    - asia pacific uni
-    - uni
-    - university
-    - college
+  - synonym: APU
+    examples: |
+      - apu
+      - asia pacific uni
+      - uni
+      - university
+      - college
 
-- synonym: LRT
-  examples: |
-    - lrt
-    - bukit jalil
-    - bj
-    - train station
-    - train
-    - station
+  - synonym: LRT
+    examples: |
+      - lrt
+      - bukit jalil
+      - bj
+      - train station
+      - train
+      - station
 
+  - synonym: 1
+    examples: |
+      - one
+
+  - synonym: 2
+    examples: |
+      - two
+
+  - synonym: 3
+    examples: |
+      - three
+
+  - synonym: 4
+    examples: |
+      - four
+
+  - synonym: 5
+    examples: |
+      - five
