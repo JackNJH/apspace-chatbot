@@ -1,4 +1,5 @@
 import sqlite3
+from apscheduler.schedulers.background import BackgroundScheduler
 from datetime import datetime, timedelta
 
 def get_bus_schedule(origin_location, destination_location):
@@ -170,7 +171,74 @@ def get_results_by_semester(semester):
         print(f"SQLite error: {e}")
         return None
 
+def get_meetingrooms():
+    try:
+        with sqlite3.connect('database.db') as connection:
+            cursor = connection.cursor()
 
+        current_time = datetime.now().strftime('%I:%M %p')
+        end_time = (datetime.now() + timedelta(hours=1)).strftime('%I:%M %p')
+
+        cursor.execute('''
+            SELECT room_id
+            FROM meeting_rooms
+            WHERE room_id NOT IN (
+                SELECT room_id
+                FROM booked_rooms
+                WHERE (
+                    (start_time <= ? AND end_time >= ?)
+                    OR (start_time <= ? AND end_time >= ?)
+                    OR (start_time >= ? AND end_time <= ?)
+                )
+            )
+            LIMIT 1
+        ''', (current_time, current_time, end_time, end_time, current_time, end_time))
+
+        meeting_rooms = cursor.fetchone()
+        return meeting_rooms
+    except sqlite3.Error as e:
+        print(f"SQLite error: {e}")
+        return None
+
+def insert_booking_data(room_id, start_time, end_time):
+    try:
+        with sqlite3.connect('database.db') as connection:
+            cursor = connection.cursor()
+
+            cursor.execute('''
+                INSERT INTO booked_rooms (room_id, start_time, end_time)
+                VALUES (?, ?, ?)
+            ''', (room_id, start_time, end_time))
+
+            # Commit the changes
+            connection.commit()
+    except sqlite3.Error as e:
+        print(f"SQLite error: {e}")
+
+def delete_outdated_bookings():
+    try:
+        with sqlite3.connect('database.db') as connection:
+            cursor = connection.cursor()
+
+            # Calculate the current time minus one hour
+            one_hour_ago = (datetime.now() - timedelta(hours=1)).strftime('%Y-%m-%d %H:%M:%S')
+
+            # Delete records older than one hour
+            cursor.execute('''
+                DELETE FROM booked_rooms
+                WHERE end_time <= ?
+            ''', (one_hour_ago,))
+
+            # Commit the changes
+            connection.commit()
+
+    except sqlite3.Error as e:
+        print(f"SQLite error: {e}")
+
+# Schedule the job to run every hour
+scheduler = BackgroundScheduler()
+scheduler.add_job(delete_outdated_bookings, 'interval', hours=1)
+scheduler.start()
 
 # Call function to clear table's data
 def clear_all_data():

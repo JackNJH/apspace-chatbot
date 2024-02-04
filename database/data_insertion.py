@@ -137,11 +137,11 @@ def insert_sample_data():
             ''', meeting_rooms_data)
 
             cursor.executemany('''
-                INSERT INTO booked_rooms (room_id, start_time, end_time, booking_day)
-                VALUES (?, ?, ?, ?)
+                INSERT INTO booked_rooms (room_id, start_time, end_time)
+                VALUES (?, ?, ?)
             ''', [
-                (1, '10:00 AM', '11:00 AM', 'Monday'),
-                (2, '03:30 PM', '05:00 PM', 'Wednesday'),
+                (1, '10:00 AM', '11:00 AM'),
+                (2, '04:00 PM', '05:00 PM'),
             ])
 
     except sqlite3.Error as e:

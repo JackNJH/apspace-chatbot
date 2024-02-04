@@ -89,7 +89,6 @@ def initialize_database():
                     room_id INTEGER,
                     start_time TEXT NOT NULL,
                     end_time TEXT NOT NULL,
-                    booking_day TEXT NOT NULL,
                     FOREIGN KEY (room_id) REFERENCES meeting_rooms(room_id)
                 )
             ''')

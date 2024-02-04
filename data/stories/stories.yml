@@ -17,6 +17,11 @@ stories:
   - intent: cancel
   - action: utter_cancel
 
+- story: random confirmation
+  steps:
+  - intent: confirm
+  - action: utter_ask_rephrase
+
 - story: user leaves
   steps:
   - intent: bye

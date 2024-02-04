@@ -188,6 +188,33 @@ nlu:
     - tell me about sem [4](semester_num) performance
     - display my grades for [5](semester_num)
 
+# BOOKING ROOMS
+- intent: ask_to_book_room
+  examples: |
+    - can I reserve a meeting room
+    - book a meeting room
+    - is it possible to book a room
+    - I'd like to reserve a meeting room
+    - how do I book a meeting room
+    - reserve a room for a meeting
+    - can I schedule a meeting room
+    - I want to book a room
+    - is room booking available
+    - reserve meeting room
+
+- intent: confirm
+  examples: |
+    - yes
+    - confirm
+    - that's correct
+    - I confirm
+    - proceed with the booking
+    - okay
+    - absolutely
+    - indeed
+    - affirmative
+    - sure
+
 # SYNONYMS
 synonyms:
   - synonym: next

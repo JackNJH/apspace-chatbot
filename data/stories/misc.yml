@@ -81,3 +81,18 @@ stories:
   - slot_was_set:
     - semester: 5
   - action: action_show_semester_results
+
+# BOOKING ROOMS
+- story: user wants to book meeting room | cancel
+  steps:
+  - intent: ask_to_book_room
+  - action: utter_booking_warning
+  - intent: cancel
+  - action: utter_cancel
+
+- story: user wants to book meeting room | confirm
+  steps:
+  - intent: ask_to_book_room
+  - action: utter_booking_warning
+  - intent: confirm
+  - action: action_book_room

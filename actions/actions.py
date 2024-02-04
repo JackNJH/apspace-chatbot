@@ -1,9 +1,9 @@
-from database.data_query import get_next_class, get_all_classes, get_today_classes, get_bus_schedule, get_free_classrooms, get_apcard_details, get_fees_details, get_cgpa, get_results_by_semester
+from database.data_query import get_next_class, get_all_classes, get_today_classes, get_bus_schedule, get_free_classrooms, get_apcard_details, get_fees_details, get_cgpa, get_results_by_semester, get_meetingrooms, insert_booking_data
 from typing import Any, Text, Dict, List, Union
-from rasa_sdk import Action, Tracker, FormValidationAction
+from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.events import SlotSet
-from datetime import datetime
+from datetime import datetime, timedelta
 
 # BUS
 class ActionBusSchedule(Action):
@@ -183,3 +183,24 @@ class ActionShowSemesterResults(Action):
 
         return [SlotSet('semester', None)] 
 
+
+class ActionBookRoom(Action):
+    def name(self) -> Text:
+        return 'action_book_room'
+    
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        meeting_rooms = get_meetingrooms()
+
+        if meeting_rooms:
+            user_selected_room_id = meeting_rooms[0]
+            current_time = datetime.now().strftime('%I:%M %p')
+            end_time = (datetime.now() + timedelta(hours=1)).strftime('%I:%M %p')
+
+            # Insert booking data
+            insert_booking_data(user_selected_room_id, current_time, end_time)
+
+            dispatcher.utter_message(f"Room {user_selected_room_id} booked from {current_time} to {end_time}")
+        else:
+            dispatcher.utter_message("No available rooms for booking at the moment.")
+
+        return []

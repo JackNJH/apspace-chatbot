@@ -28,6 +28,8 @@ intents:
   - ask_pending_fees
   - ask_results
   - inform_semester
+  - ask_to_book_room
+  - inform_booking_confirm
 
 actions:
   - action_show_class_timetable
@@ -37,7 +39,7 @@ actions:
   - action_show_pending_fees
   - action_show_cgpa
   - action_show_semester_results
-
+  - action_book_room
 
 entities:
   - class_timetable_type
@@ -186,8 +188,14 @@ responses:
   utter_ask_which_result:
   - text: "Is there a particular semester's result you would like to know?"
 
+# BOOKING ROOMS
+  utter_booking_warning:
+  - text: |
+      You are asking to book a library meeting room. 
+      Due to limitations, users can only book a meeting room for an hour from now through this chatbot.
+      Would you like to proceed?
 
-  # CONFIG
+# CONFIG
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
