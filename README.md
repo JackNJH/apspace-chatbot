@@ -16,8 +16,8 @@ Group 12's AI Chatbot for APSpace using Rasa AI. Instructions are provided below
 5. This is an example of how the terminal should look like in venv.
    ![Example Image](images/example.png)
 6. Type `rasa run actions` to run custom actions. Leave this terminal open, and open a new terminal.
-6. Train the bot with `rasa train` in the new terminal to get the first 'model'. 
-7. Type `rasa shell` in the terminal to run the chatbot.
+7. Train the bot with `rasa train` in the new terminal to get the first 'model'. 
+8. Type `rasa shell` in the terminal to run the chatbot.
 
 ## How to Save Changes Made to the Bot:
 You should train the bot after making any changes.
