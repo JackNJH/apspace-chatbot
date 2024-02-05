@@ -28,7 +28,7 @@ You should train the bot after making any changes.
 
 ### Files and Description:
 
-| File         | Description                                      |
+| File         | Description                                  |
 | ------------ | -------------------------------------------- |
 | `nlu`         | Contains example user messages to train the NLU model. Intents and synonyms should be defined here.  |
 | `domain.yml`  | The brain of the chatbot. All intents, actions, slots, entities, etc. should be registered in this file. |

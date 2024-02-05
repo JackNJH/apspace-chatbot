@@ -221,7 +221,7 @@ def delete_outdated_bookings():
             cursor = connection.cursor()
 
             # Calculate the current time minus one hour
-            one_hour_ago = (datetime.now() - timedelta(hours=1)).strftime('%Y-%m-%d %H:%M:%S')
+            one_hour_ago = (datetime.now() - timedelta(hours=1)).strftime('%I:%M %p')
 
             # Delete records older than one hour
             cursor.execute('''
@@ -255,3 +255,8 @@ def clear_all_data():
         cursor.execute('DROP TABLE IF EXISTS meeting_rooms')
         cursor.execute('DROP TABLE IF EXISTS booked_rooms')
         cursor.execute('DROP TABLE IF EXISTS borrowed_books')
+
+def clear_booked_rooms_data():
+    with sqlite3.connect('database.db') as connection:
+        cursor = connection.cursor()
+        cursor.execute('DELETE FROM booked_rooms')
