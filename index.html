@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APSpace Chatbot</title>
+
+</head>
+<body>
+    <div id="chat-container">
+    </div>
+    <input type="text" id="user-input" placeholder="Type your message...">
+    <button onclick="sendMessage()">Send</button>
+
+    <script>
+        function sendMessage() {
+            var userInput = document.getElementById("user-input").value;
+            // Send user input to Flask server
+            fetch('/webhook', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ message: userInput })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Display response in chat container
+                appendMessage(userInput, 'user');
+                appendMessage(data[0]['text'], 'bot');
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        function appendMessage(message, sender) {
+            var chatContainer = document.getElementById("chat-container");
+            var messageElement = document.createElement("div");
+            messageElement.innerText = message;
+            messageElement.classList.add(sender);
+            chatContainer.appendChild(messageElement);
+        }
+    </script>
+</body>
+</html>
