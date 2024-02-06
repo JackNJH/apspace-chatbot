@@ -12,6 +12,7 @@ intents:
   - ask_isbot
   - ask_whatspossible
   - ask_botname
+  - confirm
 
   # TIMETABLE
   - ask_timetable
