@@ -53,7 +53,7 @@ class ActionShowTimetable(Action):
             next_class = get_next_class()
 
             if next_class:
-               class_type = class_info[1] if class_info[1] is not None else ""
+               class_type = next_class[1] if next_class[1] is not None else ""
                response = f"Your next class is {next_class[0]} {class_type}.\nIt's on {next_class[2]} at {next_class[3]} to {next_class[4]} in {next_class[5]}."
             else:
                 response = "There are no more upcoming classes today."
