@@ -30,7 +30,6 @@ intents:
   - ask_results
   - inform_semester
   - ask_to_book_room
-  - inform_booking_confirm
 
 actions:
   - action_show_class_timetable

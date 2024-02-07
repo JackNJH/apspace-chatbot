@@ -94,7 +94,6 @@ nlu:
     - got it
     - interesting
     - sure thing
-    - okay
 
 - intent: ask_howbuilt
   examples: |
