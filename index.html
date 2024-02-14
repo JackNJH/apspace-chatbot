@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            position: relative;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            background-color: #003366;
+            color: #ffffff;
+            padding: 10px;
+            text-align: center;
+            font-family: 'Graphik', Arial, sans-serif; 
+        }
+        footer {
+            background-color: #003366;
+            color: #ffffff;
+            padding: 10px;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        .pictures-container {
+            text-align: center;
+        }
+        .picture {
+            width: 200px; 
+            height: 200px; 
+            overflow: hidden; 
+            display: inline-block; 
+            margin: 10px; 
+            border-radius: 10px; 
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        .picture img {
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover;
+        }
+        h2 {
+            font-family: 'Graphik', Arial, sans-serif; 
+            color: #003366;
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+        }
+        p {
+            font-family: 'Graphik', Arial, sans-serif; 
+            font-size: 18px;
+            line-height: 1.6;
+        }
+        .ready-text {
+            text-align: right;
+        }
+        .arrow {
+            position: fixed;
+            bottom: 5px;
+            right: 100px;
+            width: 250px; 
+            height: auto; 
+            transform: rotate(90deg) scaleY(-1);
+
+        }
+        .rw-header {
+            background-color: #003366 !important;
+        }
+        .rw-response {
+            background-color: #E8E8E8 !important;
+        }
+        .rw-launcher {
+            background-color: #003366 !important;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>APSpace Chatbot</h1>
+    </header>
+
+    <div class="container">
+        <h2>Ever had these inconveniences?</h2>
+    </div>
+    <div class="pictures-container">
+        <div class="picture">
+            <img src="images/image5.png" alt="University">
+        </div>
+        <div class="picture">
+            <img src="images/image2.jpg" alt="University">
+        </div>
+        <div class="picture">
+            <img src="images/image4.jpg" alt="University">
+        </div>
+        <div class="picture">
+            <img src="images/image3.jpg" alt="University">
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>Welcome to Group 12's AI Assignment</h2>
+        <p>Our chatbot is designed to quickly help you find information without overwhelming you with cluttered visuals. It's perfect for busy students who need answers fast.</p>
+        <p>This widget shows how our page would look in APSpace. While it uses static data (because we don't have access to a dynamic database), it can still fetch information in real-time.</p>
+        <p class="ready-text">Ready to get started? Just click here!</p>
+    </div>
+    
+    <img src="images/arrow.jpg" alt="Arrow" class="arrow">
+
+    <script>!(function () {
+        let e = document.createElement("script"),
+          t = document.head || document.getElementsByTagName("head")[0];
+        (e.src =
+          "https://cdn.jsdelivr.net/npm/rasa-webchat/lib/index.js"),
+          (e.async = !0),
+          (e.onload = () => {
+            window.WebChat.default(
+              {
+                initPayload: '/greet',
+                customData: { language: "en" },
+                socketUrl: "http://localhost:5005",
+                title: 'Demo',
+                subtitle: 'Ask for its capabilities to start!',
+              },
+              null
+            );
+          }),
+          t.insertBefore(e, t.firstChild);
+      })();
+      window.onload = function(){window.localStorage.clear()};
+      </script>
+
+
+</body>
+</html>
+
+
+

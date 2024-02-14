@@ -26,6 +26,14 @@ You should train the bot after making any changes.
 3. Continue with `rasa shell` in the terminal to run the chatbot.
 
 
+## How to Run Bot on Website:
+1. Open 2 integrated terminals.
+2. Activate the virtual environment with `venv\Scripts\activate` (or `source venv/bin/activate` on Linux/Mac).
+3. Run `rasa run --enable-api --cors"*"`.
+4. Run `rasa run actions`.
+4. Open the `index.html` file. 
+
+
 ### Files and Description:
 
 | File         | Description                                  |
