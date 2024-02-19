@@ -10,7 +10,7 @@ Group 12's AI Chatbot for APSpace using Rasa AI. Instructions are provided below
 3. Open the file in VSCode's integrated terminal (**Make sure the correct directory is selected**). 
 4. Set up a Virtual Environment (Optional but Recommended):
    - Open terminal in the project directory.
-   - Run the command: `python -m venv venv`.
+   - Run the command (only required once): `python -m venv venv`.
    - Activate the virtual environment with `venv\Scripts\activate` (or `source venv/bin/activate` on Linux/Mac).
    - With the virtual environment activated, install dependencies: `pip install rasa`.
 5. This is an example of how the terminal should look like in venv.
