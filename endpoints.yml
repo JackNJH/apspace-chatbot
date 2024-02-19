@@ -11,7 +11,7 @@
 # https://rasa.com/docs/rasa/custom-actions
 
 action_endpoint:
- url: "https://00c6-175-143-250-68.ngrok-free.app "
+ url: "https://00c6-175-143-250-68.ngrok-free.app/webhook "
 logging:
   level: "INFO"
 
