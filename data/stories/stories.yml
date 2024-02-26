@@ -57,3 +57,13 @@ stories:
   - intent: ask_botname
   - action: utter_name
 
+- story: user asks the weather
+  steps:
+  - intent: ask_weather
+  - action: utter_weather
+  - action: action_get_weather_forecast
+
+- story: user ask the time
+  steps:
+  - intent: ask_time
+  - action: action_get_current_time

@@ -89,6 +89,10 @@ nlu:
     - until next time
     - take care
     - have a good one
+    - see you later
+    - bye-bye
+
+
 
 - intent: cancel
   examples: |
@@ -102,6 +106,34 @@ nlu:
     - its alright
     - forget it
     - don't worry about it
+    - scratch that
+    - disregard
+    - ignore that
+    - never mind that
+    - never you mind
+    - no worries
+    - no need
+    - no problem
+    - no big deal
+    - no sweat
+    - all good
+    - forget about it
+    - it's fine
+    - it's okay
+    - don't sweat it
+    - no need to worry
+    - it doesn't matter
+    - doesn't matter
+    - not important
+    - nope
+    - not a big deal
+    - let it go
+    - no concerns
+    - let's move on
+    - no sweat off my back
+    - don't worry
+    - it's all good
+
 
 - intent: stall
   examples: |
@@ -114,6 +146,7 @@ nlu:
     - got it
     - interesting
     - sure thing
+    - hmmm
 
 - intent: ask_howbuilt
   examples: |
@@ -209,3 +242,33 @@ nlu:
     - share your name with me
     - what are you called
     - who am I speaking with
+
+- intent: ask_weather
+  examples: |
+    - weather
+    - today's weather
+    - weather later
+    - what's the weather?
+    - weather report?
+    - forecast?
+    - weather update?
+    - how's the weather?
+    - current weather?
+    - weather now?
+    - whats the weather like
+    - show me weather
+
+- intent: ask_time
+  examples: |
+    - what's the time?
+    - what time is it?
+    - time?
+    - what time?
+    - now time?
+    - time now?
+    - current time?
+    - time pls
+    - time now pls
+    - what's the time now?
+    - time right now?
+    - show me time

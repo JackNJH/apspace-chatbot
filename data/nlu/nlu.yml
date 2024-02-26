@@ -46,7 +46,7 @@ nlu:
 
 - intent: inform_timetable_type
   examples: |
-    - [lesson](timetable_type) timetable please
+    - [class](timetable_type) timetable please
     - [classes](timetable_type) timetable please
     - [bus](timetable_type) timetable please
     - [busses](timetable_type) timetable please
@@ -95,50 +95,79 @@ nlu:
     - from the [station](origin_location) to [university](destination_location)
     - from [bj](origin_location) to [apu](destination_location)
     - from [uni](origin_location) to [FORTUNE PARK](destination_location)
+    - from [university](origin_location) to [FORTUNE PARK](destination_location)
+    - from [a](origin_location) to [FORTUNE PARK](destination_location)
     - from [bukit jalil](origin_location) to [apu](destination_location)
+    - from [lrt](origin_location) to [uni](destination_location)
+    - from [lrt](origin_location) to [university](destination_location)
+    - from [station](origin_location) to [apu](destination_location)
+    - from [train station](origin_location) to [uni](destination_location)
+    - from [fortune park](origin_location) to [uni](destination_location)
+    - from [fortune park](origin_location) to [college](destination_location)
 
 - intent: inform_class_timetable_type
   examples: |
-    - [next](class_timetable_type)
+    - [today](class_timetable_type)
+    - what class for [today](class_timetable_type)
+    - [today](class_timetable_type) classes
+    - show me [today](class_timetable_type) class
+    - classes for [the day](class_timetable_type)
     - [later](class_timetable_type)
     - [after this](class_timetable_type)
-    - [now](class_timetable_type)
     - [later on](class_timetable_type)
-    - [today](class_timetable_type)
-    - [today's](class_timetable_type)
-    - [the day](class_timetable_type)
-    - [all](class_timetable_type)
-    - [complete](class_timetable_type)
-    - [whole](class_timetable_type)
-    - [week's](class_timetable_type)
-    - [every](class_timetable_type)
+    - [after](class_timetable_type)
+    - [now](class_timetable_type)
+    - [week](class_timetable_type) class
+    - [whole](class_timetable_type) schedule
+    - class [later](class_timetable_type)?
+    - what class [later](class_timetable_type)
+    - [next](class_timetable_type) class
     - can I see my [next](class_timetable_type) class
-    - what's my [next](class_timetable_type) class
-    - when is the [next](class_timetable_type) class
-    - what are my upcoming [next](class_timetable_type) classes
-    - any [next](class_timetable_type) class
-    - can I see the [whole](class_timetable_type) timetable
-    - can i see the [whole](class_timetable_type) week?
-    - what about the [whole](class_timetable_type) week
-    - show me the entire [whole](class_timetable_type) timetable
-    - I want to know all [whole](class_timetable_type) classes today
-    - show [whole](class_timetable_type) classes
-    - what's on the [whole](class_timetable_type) schedule
+    - what's my class [after this](class_timetable_type)
+    - what is the class [later on](class_timetable_type) 
+    - what are my [week's](class_timetable_type) classes
+    - what class do i have [now](class_timetable_type)
+    - can I see [all](class_timetable_type) my classes
+    - can i see the [complete](class_timetable_type) week?
+    - what about the [today's](class_timetable_type) schedule
+    - show me the [whole](class_timetable_type) timetable
+    - I want to know [all](class_timetable_type) classes
+    - show [complete](class_timetable_type) classes
+    - what's on the [week's](class_timetable_type) schedule
     - what classes are there [whole](class_timetable_type)
     - what is on my schedule [today](class_timetable_type)
-    - what lessons are there [today](class_timetable_type)
+    - what lessons are there for [the day](class_timetable_type)
     - any classes scheduled [today](class_timetable_type)
     - show me my [next](class_timetable_type) lesson
-    - when is my next [next](class_timetable_type) class
-    - tell me my [next](class_timetable_type) class schedule
-    - what's my [next](class_timetable_type) lesson time
-    - any upcoming [next](class_timetable_type) classes
-    - can you show me the [whole](class_timetable_type) class timetable
-    - show me [whole](class_timetable_type) classes
+    - when is my next [later](class_timetable_type) class
+    - tell me my class schedule [today](class_timetable_type)
+    - what's [today's](class_timetable_type) lesson time
+    - any upcoming classes [today](class_timetable_type) 
+    - can you show me the [week's](class_timetable_type) class timetable
+    - show me [every](class_timetable_type) class
     - what's on the [whole](class_timetable_type) class schedule
     - what lessons do I have [today](class_timetable_type)
     - any classes scheduled [today](class_timetable_type) for me
-    - show me my [whole](class_timetable_type) class schedule for today
+    - show me my [next](class_timetable_type) class
+    - show me the [later](class_timetable_type) class
+    - what's on my schedule [after this](class_timetable_type)
+    - tell me my [next](class_timetable_type) class time
+    - any classes coming up [after](class_timetable_type) this one
+    - class [after](class_timetable_type) this
+    - what class [after](class_timetable_type) 
+    - any class [later on](class_timetable_type)
+    - when is my [next](class_timetable_type) class starting
+    - show me the [all](class_timetable_type) classes for today
+    - what are my [complete](class_timetable_type) class options for the week?
+    - what's in the [week's](class_timetable_type) timetable
+    - tell me about [every](class_timetable_type) class schedule
+    - list all the classes for the [week](class_timetable_type) 
+    - what's my [today](class_timetable_type) timetable
+    - what are the lessons for [the day](class_timetable_type)
+    - what's the schedule for [today](class_timetable_type)
+    - show me the timetable for [today's](class_timetable_type) classes
+    - what class [later](class_timetable_type) 
+    - display the class timetable for the [week's](class_timetable_type) duration
 
 
 # FREE CLASS
@@ -255,26 +284,42 @@ nlu:
     - [three](semester_num)
     - [four](semester_num) 
     - [five](semester_num)
-    - can i see semester [1](semester_num)
-    - sem [2](semester_num)
-    - semester [3](semester_num)
-    - sem [4](semester_num) please
-    - show me my sem [5](semester_num) results
-    - results for sem [1](semester_num)
-    - display semester [2](semester_num)
-    - view sem [3](semester_num)
-    - whats my sem [4](semester_num) 
-    - i want to see seme [5](semester_num)
+    - can i see semester [one](semester_num)
+    - sem [two](semester_num)
+    - semester [three](semester_num)
+    - sem [four](semester_num) please
+    - show me my sem [five](semester_num) results
+    - results for sem [one](semester_num)
+    - display semester [two](semester_num)
+    - view sem [three](semester_num)
+    - whats my sem [four](semester_num) 
+    - i want to see seme [five](semester_num)
     - can you show my [1](semester_num) results
-    - tell me about my grades in semester [2](semester_num)
-    - display results for [3](semester_num)
-    - show sem [4](semester_num) GPA
-    - I'm curious about my performance in semester [5](semester_num)
+    - tell me about my grades in semester [two](semester_num)
+    - display results for [three](semester_num)
+    - show sem [four](semester_num) gpa
+    - i'm curious about my performance in semester [five](semester_num)
     - semester [1](semester_num) grades, please
-    - what's my GPA for [2](semester_num)
-    - give me details for [3](semester_num)
+    - what's my gpa for [two](semester_num)
+    - give me details for [three](semester_num)
     - tell me about sem [4](semester_num) performance
     - display my grades for [5](semester_num)
+    - could you provide the details for semester [1](semester_num)
+    - please show me the results for term [2](semester_num)
+    - i need information regarding semester [three](semester_num)
+    - could you display the grades for the [4](semester_num) semester?
+    - tell me about semester [five](semester_num) performance
+    - semester [one](semester_num) grades, if possible
+    - show me the gpa for term [2](semester_num)
+    - can you give me an overview of semester [three](semester_num)?
+    - i want to know my performance in semester [4](semester_num)
+    - display grades for the [5](semester_num) semester, please
+    - provide results for term [1](semester_num)
+    - show me semester [two](semester_num) gpa
+    - what's the status of semester [three](semester_num)?
+    - show me semester [4](semester_num) performance
+    - show me grades for semester [five](semester_num)
+
 
 # BOOKING ROOMS
 - intent: ask_to_book_room

@@ -13,6 +13,8 @@ intents:
   - ask_whatspossible
   - ask_botname
   - confirm
+  - ask_weather
+  - ask_time
 
   # TIMETABLE
   - ask_timetable
@@ -40,6 +42,8 @@ actions:
   - action_show_cgpa
   - action_show_semester_results
   - action_book_room
+  - action_get_current_time
+  - action_get_weather_forecast
 
 entities:
   - class_timetable_type
@@ -120,29 +124,49 @@ responses:
   - text: "Hey! How can I help you?"
   - text: "Hi! Do you need any help?"
   - text: "Good day, what can I help with?"
+  - text: "Greetings! How may I assist you today?"
+  - text: "Hello there! What can I do for you?"
+  - text: "Welcome! How can I help you today?"
 
   utter_mood:
   - text: "I'm always doing great! How can I help? (I'm not even alive)"
   - text: "Never been better! Ready to help with anything."
+  - text: "I'm here and ready to assist, just like always!"
+  - text: "Feeling as lively as ever, even if I'm just lines of code!"
+  - text: "All systems go! What can I assist you with today?"
 
   utter_cancel:
   - text: "Alright! Feel free to ask for assistance!"
   - text: "Ask again if you need anything!"
+  - text: "Understood! Don't hesitate to reach out if you need anything else."
+  - text: "Noted! Feel free to ask again if there's anything you need assistance with."
+  - text: "Got it! Just let me know if you change your mind or need further help."
   
   utter_bye:
   - text: "Bye! Have a good day!"
   - text: "See you!"
   - text: "Have a good day ahead!"
+  - text: "Goodbye! Wishing you a fantastic day ahead!"
+  - text: "Goodbye for now!"
+  - text: "Until next time! Have a good day!"
 
   utter_thanks:
   - text: "You're welcome, it's my pleasure to be of assistance."
   - text: "No problem."
+  - text: "No problem at all, happy to assist!"
+  - text: "Glad I could be of help!"
 
   utter_stall:
   - text: "Is there anything else you need help with?"
+  - text: "Anything else on your mind? I'm here to assist with whatever you need."
+  - text: "Need further assistance or have any other questions?"
+  - text: "Feel free to ask if there's anything else you need help with."
 
   utter_ask_rephrase:
   - text: "I'm sorry, I didn't quite understand that. Could you rephrase?"
+  - text: "Apologies, could you please rephrase that? I want to make sure I understand correctly."
+  - text: "Sorry, I didn't quite catch that. Could you rephrase it for me?"
+  - text: "I'm having trouble understanding. Could you try saying that in a different way?"
 
   utter_default:
   - text: "Sorry... I can't help you."
@@ -172,6 +196,9 @@ responses:
   utter_name:
   - text: "I'm APSpace's Chatbot! How can I help you?"
   - text: "I'm APSpace Chatbot. Do you need any help?"
+
+  utter_weather:
+    - text: "🚨 Please note: This weather forecast is only for Kuala Lumpur! 🚨"
 
   # FUNCTIONS
   # TIMETABLE

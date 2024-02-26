@@ -4,6 +4,7 @@ from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.events import SlotSet
 from datetime import datetime, timedelta
+import requests, random
 
 # BUS
 class ActionBusSchedule(Action):
@@ -116,7 +117,7 @@ class ActionFreeClassrooms(Action):
         free_classrooms = get_free_classrooms()
 
         if free_classrooms:
-            response = f"The available classrooms from {current_time} to {end_time} now are:\n"
+            response = f"The available classrooms from {current_time} to {end_time} are:\n"
             response += "\n".join([f"{classroom[0]} (Block: {classroom[1]}, Floor: {classroom[2]})" for classroom in free_classrooms])
         else:
             response = f"No available classrooms on {day_of_week} at {current_time}."
@@ -222,3 +223,63 @@ class ActionBookRoom(Action):
             dispatcher.utter_message("No available rooms for booking at the moment.")
 
         return []
+    
+
+class ActionGetCurrentTime(Action):
+    def name(self) -> Text:
+        return "action_get_current_time"
+
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        
+        current_time = datetime.now().strftime("%I:%M %p")
+        
+        responses = [
+            f"The current time is {current_time}.",
+            f"It's currently {current_time}.",
+            f"The time is {current_time}.",
+            f"The current time is {current_time}.",
+            f"The time is currently {current_time}.",
+            f"It is {current_time} right now."
+        ]
+
+        random.shuffle(responses)
+
+        dispatcher.utter_message(text=responses[0])
+
+        return []
+
+
+class ActionGetWeatherForecast(Action):
+    def name(self) -> Text:
+        return "action_get_weather_forecast"
+
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        
+        location = "Kuala Lumpur" 
+        
+        # Make request to the weather API
+        api_key = "3d76ffa4ffbc075bd90dcae88a4e3c25"
+        url = f"http://api.openweathermap.org/data/2.5/weather?q={location}&appid={api_key}"
+        response = requests.get(url)
+        
+        responses = []
+        
+        if response.status_code == 200:
+            data = response.json()
+            weather_description = data['weather'][0]['description']
+            temperature_kelvin = data['main']['temp']
+            temperature_celsius = round(temperature_kelvin - 273.15, 2)
+
+            responses.append(f"The current weather state in {location} is {weather_description} with a temperature of {temperature_celsius}°C.")
+            responses.append(f"The weather shows a {weather_description} in {location} right now, with a temperature of {temperature_celsius}°C.")
+            responses.append(f"{location} has {weather_description} with a temperature of {temperature_celsius}°C at the moment.")
+            
+            random.shuffle(responses)
+            
+            dispatcher.utter_message(text=responses[0])
+        else:
+            dispatcher.utter_message(text="Sorry, I couldn't fetch the weather forecast at the moment. Please try again later.")
+        
+        return []
+
+
