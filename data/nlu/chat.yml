@@ -7,6 +7,26 @@ nlu:
     - hey
     - hello
     - hi
+    - hey there
+    - hi there
+    - good morning
+    - good afternoon
+    - good evening
+    - hey friend
+    - hey buddy
+    - hiya
+    - howdy
+    - yo
+    - greetings
+    - wassup
+    - haiyo
+    - heyo
+    - whasgood
+    - whats good
+    - good day
+    - gdday
+    - gday
+    - bello
 
 - intent: ask_botmood
   examples: |

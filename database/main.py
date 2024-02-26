@@ -1,10 +1,11 @@
+# File for testing database retrieval
 import sqlite3
 from initialization import initialize_database
 from data_insertion import insert_sample_data
 from data_query import get_next_class, get_all_classes, clear_all_data, get_today_classes, get_bus_schedule, clear_booked_rooms_data
 
-# initialize_database()
-# insert_sample_data()
+initialize_database()
+insert_sample_data()
 
 def main():
     next_class = get_next_class()

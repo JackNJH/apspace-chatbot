@@ -17,19 +17,26 @@ class ActionBusSchedule(Action):
         schedule = get_bus_schedule(origin_location, destination_location)
 
         if schedule:
-            # Extract start_time values from the tuples and convert to datetime objects
             start_times = [time[0] for time in schedule]
+            start_times_formatted = []
+
+            # Convert time format
+            for time_str in start_times:
+                time_obj = datetime.strptime(time_str, "%H:%M")
+                time_str_12hr = time_obj.strftime("%I:%M %p")  
+                start_times_formatted.append(time_str_12hr)
 
             # Find the next closest bus time relative to the current time
-            current_time = datetime.now().strftime('%I:%M %p')
+            current_time = datetime.now().strftime('%H:%M')
 
             earliest_start_time = min((time for time in start_times if time >= current_time), default=None)
 
             # Create the response message with all start_time values
-            response = f"The bus schedule from {origin_location} to {destination_location} is:\n{', '.join(start_times)}"
+            response = f"The bus schedule from {origin_location} to {destination_location} is:\n{', '.join(start_times_formatted)}"
 
             if earliest_start_time:
-                response += f"\n\nThe next closest bus is at {earliest_start_time}."
+                earliest_start_time_12hr = datetime.strptime(earliest_start_time, "%H:%M").strftime("%I:%M %p")
+                response += f"\n\nThe next closest bus is at {earliest_start_time_12hr}."
             else:
                 response += "\n\nThere's no more buses for that route today."
         else:
@@ -44,6 +51,10 @@ class ActionShowTimetable(Action):
     def name(self):
         return 'action_show_class_timetable'
 
+    def convert_to_12_hour_format(self, time_str):
+        time_obj = datetime.strptime(time_str, '%H:%M')
+        return time_obj.strftime('%I:%M %p')
+
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain):
         timetable_type = tracker.get_slot('class_timetable_type')
         response = ""
@@ -54,7 +65,9 @@ class ActionShowTimetable(Action):
 
             if next_class:
                class_type = next_class[1] if next_class[1] is not None else ""
-               response = f"Your next class is {next_class[0]} {class_type}.\nIt's on {next_class[2]} at {next_class[3]} to {next_class[4]} in {next_class[5]}."
+               start_time_12h = self.convert_to_12_hour_format(next_class[3])
+               end_time_12h = self.convert_to_12_hour_format(next_class[4])
+               response = f"Your next class is {next_class[0]} {class_type}.\nIt's on {next_class[2]} at {start_time_12h} to {end_time_12h} in {next_class[5]}."
             else:
                 response = "There are no more upcoming classes today."
 
@@ -66,7 +79,9 @@ class ActionShowTimetable(Action):
                 response = "Here is the complete timetable:\n"
                 for class_info in all_classes:
                     class_type = class_info[1] if class_info[1] is not None else ""
-                    response += f"{class_info[0]} {class_type} on {class_info[2]} at {class_info[3]} in {class_info[4]}\n"
+                    start_time_12h = self.convert_to_12_hour_format(class_info[3])
+                    end_time_12h = self.convert_to_12_hour_format(class_info[4])
+                    response += f"{class_info[0]} {class_type} on {class_info[2]} at {start_time_12h} to {end_time_12h} in {class_info[5]}\n"
             else:
                 response = "The timetable is currently empty."
 
@@ -78,7 +93,9 @@ class ActionShowTimetable(Action):
                 response = "Here are today's classes:\n"
                 for class_info in today_classes:
                     class_type = class_info[1] if class_info[1] is not None else ""
-                    response += f"{class_info[0]} {class_type} on {class_info[2]} at {class_info[3]} in {class_info[4]}\n"
+                    start_time_12h = self.convert_to_12_hour_format(class_info[3])
+                    end_time_12h = self.convert_to_12_hour_format(class_info[4])
+                    response += f"{class_info[0]} {class_type} from {start_time_12h} to {end_time_12h}\n"
             else:
                 response = "There are no classes scheduled for today."
 
@@ -94,11 +111,12 @@ class ActionFreeClassrooms(Action):
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain):
         day_of_week = datetime.now().strftime('%A')
         current_time = datetime.now().strftime('%I:%M %p')
+        end_time = (datetime.now() + timedelta(hours=2)).strftime('%I:%M %p')
 
-        free_classrooms = get_free_classrooms(day_of_week, current_time)
+        free_classrooms = get_free_classrooms()
 
         if free_classrooms:
-            response = f"The available classrooms for more than an hour from now are:\n"
+            response = f"The available classrooms from {current_time} to {end_time} now are:\n"
             response += "\n".join([f"{classroom[0]} (Block: {classroom[1]}, Floor: {classroom[2]})" for classroom in free_classrooms])
         else:
             response = f"No available classrooms on {day_of_week} at {current_time}."

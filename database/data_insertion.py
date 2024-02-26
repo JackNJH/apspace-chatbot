@@ -29,46 +29,47 @@ def insert_sample_data():
                 INSERT INTO class_schedule (classroom_id, day_of_week, start_time, end_time, subject_name, class_type)
                 VALUES (?, ?, ?, ?, ?, ?)
             ''', [
-                ('D-07-08', 'Monday', '08:30 AM', '10:30 AM', 'Introduction to AI', 'Tutorial'),
-                ('Tech Lab 6-07', 'Monday', '10:45 AM', '12:45 PM', 'Java Programming', 'Lab'),
-                ('B-04-03', 'Monday', '08:30 AM', '10:30 AM', 'Digital Security & Forensics', 'Tutorial'),
-                ('E-08-03', 'Tuesday', '08:30 AM', '10:30 AM', 'Java Programming', 'Lecture'),
-                ('B-07-09', 'Wednesday', '01:30 PM', '03:30 PM', 'Software Development Project', None),
-                ('B-05-05', 'Thursday', '08:30 AM', '10:30 AM', 'Introduction to AI', 'Lecture'),
-                ('B-04-05', 'Friday', '08:30 AM', '10:30 AM', 'Digital Security & Forensics', 'Lecture'),
+                ('D-07-08', 'Monday', '08:30', '10:30', 'Introduction to AI', 'Tutorial'),
+                ('Tech Lab 6-07', 'Monday', '10:45', '12:45', 'Java Programming', 'Lab'),
+                ('B-04-03', 'Monday', '15:45', '17:45', 'Digital Security & Forensics', 'Tutorial'),
+                ('E-08-03', 'Tuesday', '08:30', '10:30', 'Java Programming', 'Lecture'),
+                ('B-07-09', 'Wednesday', '13:30', '15:30', 'Software Development Project', None),
+                ('B-05-05', 'Thursday', '08:30', '10:30', 'Introduction to AI', 'Lecture'),
+                ('B-04-05', 'Friday', '08:30', '10:30', 'Digital Security & Forensics', 'Lecture'),
             ])
 
             cursor.executemany('''
                 INSERT INTO bus_schedule (route, start_time)
                 VALUES (?, ?)
             ''', [
-                ('APU to LRT', '01:00 PM'),
-                ('APU to LRT', '01:30 PM'),
-                ('APU to LRT', '02:00 PM'),
-                ('APU to LRT', '02:30 PM'),
-                ('APU to LRT', '03:00 PM'),
-                ('APU to LRT', '03:30 PM'),
-                ('APU to LRT', '04:00 PM'),
-                ('LRT to APU', '08:00 AM'),
-                ('LRT to APU', '08:30 AM'),
-                ('LRT to APU', '09:00 AM'),
-                ('LRT to APU', '09:30 AM'),
-                ('LRT to APU', '10:00 AM'),
-                ('LRT to APU', '10:30 AM'),
-                ('LRT to APU', '11:00 AM'),
-                ('LRT to APU', '11:30 AM'),
-                ('LRT to APU', '12:00 PM'),
-                ('LRT to APU', '12:30 PM'),
-                ('LRT to APU', '01:00 PM'),
-                ('LRT to APU', '01:30 PM'),
-                ('LRT to APU', '02:00 PM'),
-                ('FORTUNE PARK to APU', '10:00 AM'),
-                ('FORTUNE PARK to APU', '02:00 PM'),
-                ('FORTUNE PARK to APU', '09:00 PM'),
-                ('APU to FORTUNE PARK', '12:00 PM'),
-                ('APU to FORTUNE PARK', '04:00 PM'),
-                ('APU to FORTUNE PARK', '11:00 PM'),
+                ('APU to LRT', '13:00'),
+                ('APU to LRT', '13:30'),
+                ('APU to LRT', '14:00'),
+                ('APU to LRT', '14:30'),
+                ('APU to LRT', '15:00'),
+                ('APU to LRT', '15:30'),
+                ('APU to LRT', '16:00'),
+                ('LRT to APU', '08:00'),
+                ('LRT to APU', '08:30'),
+                ('LRT to APU', '09:00'),
+                ('LRT to APU', '09:30'),
+                ('LRT to APU', '10:00'),
+                ('LRT to APU', '10:30'),
+                ('LRT to APU', '11:00'),
+                ('LRT to APU', '11:30'),
+                ('LRT to APU', '12:00'),
+                ('LRT to APU', '12:30'),
+                ('LRT to APU', '13:00'),
+                ('LRT to APU', '13:30'),
+                ('LRT to APU', '14:00'),
+                ('FORTUNE PARK to APU', '10:00'),
+                ('FORTUNE PARK to APU', '14:00'),
+                ('FORTUNE PARK to APU', '21:00'),
+                ('APU to FORTUNE PARK', '12:00'),
+                ('APU to FORTUNE PARK', '16:00'),
+                ('APU to FORTUNE PARK', '23:00'),
             ])
+
 
             # SUBJECTS
             subjects_data = [
@@ -140,9 +141,10 @@ def insert_sample_data():
                 INSERT INTO booked_rooms (room_id, start_time, end_time)
                 VALUES (?, ?, ?)
             ''', [
-                (1, '10:00 AM', '11:00 AM'),
-                (2, '04:00 PM', '05:00 PM'),
+                (1, '10:00', '11:00'),
+                (2, '16:00', '17:00'),
             ])
+
 
     except sqlite3.Error as e:
         print(f"Error inserting sample data: {e}")

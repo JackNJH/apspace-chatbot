@@ -2,6 +2,12 @@ import sqlite3
 from apscheduler.schedulers.background import BackgroundScheduler
 from datetime import datetime, timedelta
 
+current_time = datetime.now().strftime('%H:%M')
+current_day_of_week = datetime.now().strftime('%A')
+
+# Time for bookings / free classroom
+end_time = (datetime.now() + timedelta(hours=1)).strftime('%H:%M')
+
 def get_bus_schedule(origin_location, destination_location):
     try:
         with sqlite3.connect('database.db') as connection:
@@ -21,8 +27,6 @@ def get_bus_schedule(origin_location, destination_location):
 
 def get_next_class():
     try:
-        current_day_of_week = datetime.now().strftime('%A')
-        current_time = datetime.now().strftime('%I:%M %p')
 
         with sqlite3.connect('database.db') as connection:
             cursor = connection.cursor()
@@ -32,24 +36,41 @@ def get_next_class():
                 SELECT subject_name, class_type, day_of_week, start_time, end_time, c.classroom_id
                 FROM class_schedule cs
                 INNER JOIN classrooms c ON cs.classroom_id = c.classroom_id
-                WHERE day_of_week = ? AND cs.start_time >= ?
+                WHERE day_of_week = ? AND start_time > ?
                 ORDER BY start_time
                 LIMIT 1
             ''', (current_day_of_week, current_time))
 
             next_class = cursor.fetchone()
-            
-        return next_class
+
+            if next_class:
+                return next_class
+            else:
+                # If no classes left for today, find the earliest class for the next day
+                next_day = (datetime.now() + timedelta(days=1)).strftime('%A')
+                cursor.execute('''
+                    SELECT subject_name, class_type, day_of_week, start_time, end_time, c.classroom_id
+                    FROM class_schedule cs
+                    INNER JOIN classrooms c ON cs.classroom_id = c.classroom_id
+                    WHERE day_of_week = ?
+                    ORDER BY start_time
+                    LIMIT 1
+                ''', (next_day,))
+                
+                next_class_next_day = cursor.fetchone()
+                return next_class_next_day
+
     except sqlite3.Error as e:
         print(f"SQLite error: {e}")
         return None
+
 
 def get_all_classes():
     try:
         with sqlite3.connect('database.db') as connection:
             cursor = connection.cursor()
             cursor.execute('''
-                SELECT cs.subject_name, cs.class_type, cs.day_of_week, cs.start_time, cs.classroom_id
+                SELECT cs.subject_name, cs.class_type, cs.day_of_week, cs.start_time, cs.end_time, cs.classroom_id
                 FROM class_schedule cs
                 INNER JOIN classrooms c ON cs.classroom_id = c.classroom_id
             ''')
@@ -61,12 +82,11 @@ def get_all_classes():
 
 def get_today_classes():
     try:
-        current_day_of_week = datetime.now().strftime('%A')
 
         with sqlite3.connect('database.db') as connection:
             cursor = connection.cursor()
             cursor.execute('''
-                SELECT cs.subject_name, cs.class_type, cs.day_of_week, cs.start_time, cs.classroom_id
+                SELECT cs.subject_name, cs.class_type, cs.day_of_week, cs.start_time, cs.end_time, cs.classroom_id
                 FROM class_schedule cs
                 INNER JOIN classrooms c ON cs.classroom_id = c.classroom_id
                 WHERE cs.day_of_week = ?
@@ -78,13 +98,12 @@ def get_today_classes():
         print(f"SQLite error: {e}")
         return None
 
-def get_free_classrooms(day_of_week, current_time):
+def get_free_classrooms():
     try:
         with sqlite3.connect('database.db') as connection:
             cursor = connection.cursor()
 
-            # Calculate the minimum free time as current time + 1 hour
-            end_time = (datetime.strptime(current_time, '%I:%M %p') + timedelta(hours=1)).strftime('%I:%M %p')
+            end_time = (datetime.now() + timedelta(hours=2)).strftime('%H:%M')
 
             # Get all classrooms that are currently unoccupied
             cursor.execute('''
@@ -100,7 +119,7 @@ def get_free_classrooms(day_of_week, current_time):
                         (s.end_time >= ? AND s.end_time <= ?)
                     )
                 )
-            ''', (day_of_week, current_time, end_time, current_time, end_time))
+            ''', (current_day_of_week, current_time, end_time, current_time, end_time))
 
             free_classrooms = cursor.fetchall()
             return free_classrooms
@@ -176,9 +195,6 @@ def get_meetingrooms():
         with sqlite3.connect('database.db') as connection:
             cursor = connection.cursor()
 
-        current_time = datetime.now().strftime('%I:%M %p')
-        end_time = (datetime.now() + timedelta(hours=1)).strftime('%I:%M %p')
-
         cursor.execute('''
             SELECT room_id
             FROM meeting_rooms
@@ -221,7 +237,7 @@ def delete_outdated_bookings():
             cursor = connection.cursor()
 
             # Calculate the current time minus one hour
-            one_hour_ago = (datetime.now() - timedelta(hours=1)).strftime('%I:%M %p')
+            one_hour_ago = (datetime.now() - timedelta(hours=1)).strftime('%H:%M')
 
             # Delete records older than one hour
             cursor.execute('''
