@@ -33,7 +33,7 @@ class ActionBusSchedule(Action):
             earliest_start_time = min((time for time in start_times if time >= current_time), default=None)
 
             # Create the response message with all start_time values
-            response = f"The bus schedule from {origin_location} to {destination_location} is:\n{', '.join(start_times_formatted)}"
+            response = f"The bus schedule from {origin_location} to {destination_location} is:  \n{', '.join(start_times_formatted)}"
 
             if earliest_start_time:
                 earliest_start_time_12hr = datetime.strptime(earliest_start_time, "%H:%M").strftime("%I:%M %p")
@@ -68,7 +68,7 @@ class ActionShowTimetable(Action):
                class_type = next_class[1] if next_class[1] is not None else ""
                start_time_12h = self.convert_to_12_hour_format(next_class[3])
                end_time_12h = self.convert_to_12_hour_format(next_class[4])
-               response = f"Your next class is {next_class[0]} {class_type}.\nIt's on {next_class[2]} at {start_time_12h} to {end_time_12h} in {next_class[5]}."
+               response = f"Your next class is {next_class[0]} {class_type}.  \nIt's on {next_class[2]} at {start_time_12h} to {end_time_12h} in {next_class[5]}."
             else:
                 response = "There are no more upcoming classes today."
 
@@ -77,12 +77,12 @@ class ActionShowTimetable(Action):
             all_classes = get_all_classes()
 
             if all_classes:
-                response = "Here is the complete timetable:\n"
+                response = "Here is the complete timetable:  \n"
                 for class_info in all_classes:
                     class_type = class_info[1] if class_info[1] is not None else ""
                     start_time_12h = self.convert_to_12_hour_format(class_info[3])
                     end_time_12h = self.convert_to_12_hour_format(class_info[4])
-                    response += f"{class_info[0]} {class_type} on {class_info[2]} at {start_time_12h} to {end_time_12h} in {class_info[5]}\n"
+                    response += f"{class_info[0]} {class_type} on {class_info[2]} at {start_time_12h} to {end_time_12h} in {class_info[5]}  \n"
             else:
                 response = "The timetable is currently empty."
 
@@ -91,12 +91,12 @@ class ActionShowTimetable(Action):
             today_classes = get_today_classes()
 
             if today_classes:
-                response = "Here are today's classes:\n"
+                response = "Here are today's classes:  \n\n"
                 for class_info in today_classes:
                     class_type = class_info[1] if class_info[1] is not None else ""
                     start_time_12h = self.convert_to_12_hour_format(class_info[3])
                     end_time_12h = self.convert_to_12_hour_format(class_info[4])
-                    response += f"{class_info[0]} {class_type} from {start_time_12h} to {end_time_12h}\n"
+                    response += f"{class_info[0]} {class_type} from {start_time_12h} to {end_time_12h} in {class_info[5]}. \n"
             else:
                 response = "There are no classes scheduled for today."
 
@@ -117,8 +117,8 @@ class ActionFreeClassrooms(Action):
         free_classrooms = get_free_classrooms()
 
         if free_classrooms:
-            response = f"The available classrooms from {current_time} to {end_time} are:\n"
-            response += "\n".join([f"{classroom[0]} (Block: {classroom[1]}, Floor: {classroom[2]})" for classroom in free_classrooms])
+            response = f"The available classrooms from {current_time} to {end_time} are:  \n"
+            response += "  \n".join([f"{classroom[0]} (Block: {classroom[1]}, Floor: {classroom[2]})" for classroom in free_classrooms])
         else:
             response = f"No available classrooms on {day_of_week} at {current_time}."
 
@@ -137,7 +137,7 @@ class ActionAPCardDetails(Action):
         if apcard_details:
             for row in apcard_details:
                 apcard_id, remaining_cash, spending_history, topup_history = row
-                message = f"APCard ID: {apcard_id}\nRemaining Cash: {remaining_cash}\nLatest Spending History: {spending_history}\nLatest Topup History: {topup_history}"
+                message = f"APCard ID: {apcard_id}  \nRemaining Cash: {remaining_cash}  \nLatest Spending History: {spending_history}  \nLatest Topup History: {topup_history}"
                 dispatcher.utter_message(message)
         else:
             dispatcher.utter_message("Sorry, there was an issue fetching APCard details.")
@@ -156,7 +156,7 @@ class ActionPendingFees(Action):
         if fees_details:
             for row in fees_details:
                 total_amount, unpaid, paid = row
-                message = f"Total Course Fees: {total_amount}\nOutstanding Amount: {unpaid}\nPaid: {paid}"
+                message = f"Total Course Fees: {total_amount}  \nOutstanding Amount: {unpaid}  \nPaid: {paid}"
                 dispatcher.utter_message(message)
         else:
             dispatcher.utter_message("Sorry, there was an issue fetching fee details.")
@@ -190,9 +190,9 @@ class ActionShowSemesterResults(Action):
             results = get_results_by_semester(semester)
             
             if results:
-                message = f"Results for semester {semester}:\n"
+                message = f"Results for semester {semester}:  \n"
                 for subject_id, gpa in results:
-                    message += f"{subject_id}: {gpa}GPA\n"
+                    message += f"{subject_id}: {gpa}GPA  \n"
             else:
                 message = f"No results available for semester {semester}."
 
