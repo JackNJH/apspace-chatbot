@@ -212,13 +212,16 @@ class ActionBookRoom(Action):
 
         if meeting_rooms:
             user_selected_room_id = meeting_rooms[0]
-            current_time = datetime.now().strftime('%I:%M %p')
-            end_time = (datetime.now() + timedelta(hours=1)).strftime('%I:%M %p')
+            current_time = datetime.now().strftime('%H:%M')
+            end_time = (datetime.now() + timedelta(hours=1)).strftime('%H:%M')
 
             # Insert booking data
             insert_booking_data(user_selected_room_id, current_time, end_time)
 
-            dispatcher.utter_message(f"Room {user_selected_room_id} booked from {current_time} to {end_time}")
+            current_time_12hr = datetime.now().strftime('%I:%M %p') 
+            end_time_12hr = (datetime.now() + timedelta(hours=1)).strftime('%I:%M %p')
+
+            dispatcher.utter_message(f"Room {user_selected_room_id} booked from {current_time_12hr} to {end_time_12hr}")
         else:
             dispatcher.utter_message("No available rooms for booking at the moment.")
 

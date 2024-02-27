@@ -4,18 +4,8 @@ from initialization import initialize_database
 from data_insertion import insert_sample_data
 from data_query import get_next_class, get_all_classes, clear_all_data, get_today_classes, get_bus_schedule, clear_booked_rooms_data
 
-initialize_database()
-insert_sample_data()
-
-def main():
-    next_class = get_next_class()
-    all_classes = get_all_classes()
-    all_classes_today = get_today_classes()
-
-    
-    print("Next Class:", next_class)
-    print("All Classes:", all_classes)
-    print("All Classes Today:", all_classes_today)
+# initialize_database()
+# insert_sample_data()
 
 def show_all_tables_and_data():
     try:
@@ -50,6 +40,5 @@ def show_all_tables_and_data():
 
 
 # show_all_tables_and_data()
-# main()
 # clear_all_data()
-# clear_booked_rooms_data()
+clear_booked_rooms_data()
