@@ -41,4 +41,4 @@ def show_all_tables_and_data():
 
 # show_all_tables_and_data()
 # clear_all_data()
-clear_booked_rooms_data()
+# clear_booked_rooms_data()

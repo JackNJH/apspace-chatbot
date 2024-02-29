@@ -1,5 +1,4 @@
 import sqlite3
-from apscheduler.schedulers.background import BackgroundScheduler
 from datetime import datetime, timedelta
 
 current_time = datetime.now().strftime('%H:%M')
@@ -250,11 +249,6 @@ def delete_outdated_bookings():
 
     except sqlite3.Error as e:
         print(f"SQLite error: {e}")
-
-# Schedule the job to run every hour
-scheduler = BackgroundScheduler()
-scheduler.add_job(delete_outdated_bookings, 'interval', hours=1)
-scheduler.start()
 
 # Call function to clear table's data
 def clear_all_data():
